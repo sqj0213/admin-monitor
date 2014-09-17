@@ -1,0 +1,41 @@
+<html>
+<head>
+ <title>系统管理员-用户管理</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="__CSSFILEPATH__" type="text/css">
+</head>
+
+<body>
+<table cellSpacing=0 cellPadding=0 width="100%" align=center border=0>
+  <TBODY>
+    <tr bgColor=#ffffff> 
+      <td bgColor=#eaf1fb><br>
+        <br> 
+          <P align=center><span class=text3>权限列表</span>
+                    自定义权限可以定义的
+          								'popUp'=>"javascript:window.open('__URL__','','toolbar=no,resizable=yes,scrollbars=yes,menubar=no');",
+									'location'=>"javascript:location.href='__URL__';",
+									'delSele'=>"javascript: if (checkchose())   { if (confirm('所选内容将被删除，确认要删除吗？')) this.form.formname.value=this.form.name;this.form.submit();}",
+									'mulSele'=>"javascript:if (checkchose()){ this.form.submit();}",
+									'singleSele'=>"javascript:if (chk_box_status()) {location.href='__URL__&id='+get_chk_box_value();}",
+									'null'=>'' 
+          </P>
+          <P align=left><span class=text3><b>角色名称:&nbsp;&nbsp;</b>__INFLUENCENAME__</span> 
+          </P>
+
+          <P align=left><span class=text3> 
+					__USERPOWER__</span>
+          </P>
+          <P align=center>
+            <input type="button" name="button_submit1" value="关 闭" onclick="javascript:history.back();" ONMOUSEOVER="this.style.background='#ECFBFF'" 
+                        STYLE="BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-BOTTOM: black 1px solid; BACKGROUND-COLOR: #f9f9f9" 
+                        ONMOUSEOUT="this.style.background='#F9F9F9'">
+          </P>
+        <br>
+		</td>
+    </tr>
+
+  </TBODY>
+</TABLE>
+</body>
+</html>

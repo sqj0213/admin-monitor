@@ -1,0 +1,180 @@
+/**
+ * awsGlobalNav.css
+ * The following are the common colors:
+ * Main Blue: #004b91;
+ * Selected Items: #edf7ff; (same as retail)
+ * Menu borders: #ccc;
+ */
+
+/* Default, pre-JS Navigation bar links */
+.awsGlobalNav #awsDefaultGlobalNav a {
+	text-decoration: none;
+	color: #004b91;
+	font-weight: bold;
+}
+
+.awsGlobalNav #awsDefaultGlobalNav div {
+	padding: 6px 20px 6px 14px;
+	float: left;
+	border: 1px solid transparent;
+	border-left: 1px solid #ccc;
+}
+
+/* Haakon deleted this because it breaks many browsers...check IE and Firefox on Mac before restoring! */
+.awsGlobalNav_DELETED #awsGlobalNavYUIWidget div {
+	float: right;
+}
+
+.awsGlobalNav #awsDefaultGlobalNav div:first-child {
+	border-left: none;
+}
+
+/* Menu bar: reset some styles to something similar to default */
+.awsGlobalNav .yuimenubar {
+	border: 0;
+	/* line-height: 1.6; This upsets the menus */
+        /* font-size: 14px;*/
+}
+
+/* Common styles for menu bar/item labels, which are anchors. */
+.awsGlobalNav .yuimenubaritemlabel,
+.awsGlobalNav .yuimenuitemlabel {
+	text-decoration: none;
+	cursor: pointer;
+	color: #004b91;
+}
+
+/* Reset a stupid style thing */
+.awsGlobalNav ul li,
+.awsGlobalNav ul li {
+	background-image: none;
+}
+
+/* Menu Bar Item Labels */
+.awsGlobalNav .yuimenubaritemlabel {
+	font-weight: bold;
+	padding: 6px 10px 6px 10px;
+	border: 1px solid transparent;
+	border-left: 1px solid #ccc;
+	position: relative;
+	background-color: white;
+        font-size:13px;
+	font-family: Verdana;
+}
+
+/* First Menu Bar Item Label: no left border */
+.awsGlobalNav li.yuimenubaritem.first-of-type .yuimenubaritemlabel {
+	border-left: 1px solid transparent;
+}
+
+/* Menu Bar Item Label: little down arrow for menu bar items with a menu. */
+.awsGlobalNav .yuimenubaritemlabel-hassubmenu {
+	padding: 6px 20px 6px 14px;
+	background: url(/connect/images/amazon/yuimenubarlabel-hassubmenu.gif) center right no-repeat;
+}
+
+/* Menu Bar Item Labels: selected states */
+.awsGlobalNav .yuimenubaritemlabel-selected {
+	border-top: 1px solid #ccc;
+	z-index: 10;
+	background-color: white;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-topright: 1px;
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-top-right-radius: 1px;
+}
+
+.awsGlobalNav li.yuimenubaritem.first-of-type .yuimenubaritemlabel-selected {
+	border-left: 1px solid #ccc;
+}
+
+/* Menus */
+.awsGlobalNav .yuimenu .bd {
+	position: relative;
+	margin-top: -1px;
+	border: 1px solid #ccc;
+	z-index: 9;
+	padding: 0 0 4px 0;
+	background-color: white;
+
+	/* Round borders: not necessary */
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+
+	-moz-border-radius-topleft: 0;
+	-webkit-border-top-left-radius: 0;
+}
+
+/* Regular menu items */
+.awsGlobalNav .yuimenuitemlabel {
+	font-size: 94%;
+	/* padding: 2px 24px; */
+	padding-right: 24px;
+	padding-left: 24px;
+	line-height: 1.7;
+	background: url(/connect/images/amazon/yuimenuitemlabel.gif) center left no-repeat;
+	background-repeat: no-repeat;
+	font-family: Verdana;
+}
+
+.awsGlobalNav .yuimenuitem.first-of-type .yuimenuitemlabel {
+	padding-top: 1px;
+}
+
+/* Disabled menu items*/
+.awsGlobalNav .yuimenuitemlabel-disabled {
+	color: black;
+	background: none;
+	font-weight: bold;
+	padding: 2px 24px 2px 8px;
+      cursor: text;
+	font-family: Verdana;
+}
+
+/* Menu items with a submenu */
+.awsGlobalNav .yuimenuitemlabel-hassubmenu {
+	color: black;
+	background: none;
+	font-weight: bold;
+	padding: 2px 24px 2px 8px;
+	font-family: Verdana;
+}
+
+.awsGlobalNav .yuimenuitemlabel-selected {
+	color:#e47911; 
+	text-decoration:underline;
+}
+
+.awsGlobalNav .yuimenuitemlabel-hassubmenu {
+	background: url(/connect/images/amazon/yuimenubarlabel-hassubmenu.gif) center right no-repeat;
+}
+
+/* Little hack - the ID of the last menu is set to lastMenu to allow me to set a right border on this particular menu */
+.awsGlobalNav #lastMenu .yuimenubaritemlabel-selected {
+    border-right: 1px solid #ccc;
+}
+
+.awsGlobalNav .yui-menu-shadow-visible {
+	background-color: black;
+	/*left: 2px;
+	top: 2px;
+	bottom: -2px;
+	right: -2px; */
+	left: 2px;
+	top: 2px;
+	*left: 1px; /* IE ignores the absolute positions... ?? This is a "least crappy" appearance */
+	opacity: 0.1;
+	filter: alpha(opacity = 10);
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+}
+
+/* This prevents a rendering error in IE on menu items with a submenu  */
+.awsGlobalNav .yuimenuitem-hassubmenu {
+	border-bottom: solid 1px transparent;
+}
+
+/* Order is important on this due to an IE6 bug. */
+.awsGlobalNav .yuimenuitem-hassubmenu.yuimenuitem-selected {
+	background-color: #edf7ff;
+}

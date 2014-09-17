@@ -1,0 +1,24 @@
+/* home layout */
+#home-content{ float:center; margin:15px 0; width:100%; }
+#home-main{ float:left; width:618px; height:400px; border:1px solid #C3D3E3; background:#FBFCFD url(../img/bg_homebox.gif) repeat-x top;}
+#home-main .gutter{ border:1px solid #ffffff;}
+#home-sidebar{ float:center; width:350px;}
+#home-sidebar .gutter{  border:1px solid #ffffff;  padding:10px 20px;}
+#home-sidebar h2{ padding-top:10px; padding-bottom:5px; font-size:105%; color:#339900; }
+
+#homem-intro{ margin:36px 30px 10px 30px; border-bottom:1px solid #EEEEEE;}
+#homem-intro p{ padding:20px 0; color:#485266; font-size:120%; line-height:1.5em; }
+
+#homem-list{ margin:10px 30px; }
+#homem-list h2{ padding:10px 0; font-size:105%; color:#339900;}
+#home-list ul{ float:left;}
+#homem-list ul li{ float:left; display:inline; padding:10px 30px; width:210px; color:#778899; font-size:105%;}
+
+#homes-login{ height:240px; border:1px solid #C3D3E3; background:#FBFCFD url(../img/bg_homebox.gif) repeat-x top; }
+#homes-login fieldset label{ float:left; width:80px; padding-top:3px; text-align:right; font-size:12px; }
+#homes-login div{ padding:5px 0;}
+#homes-login label.none {color:#FBFCFD;}
+#homes-login h2 span{ font-weight:normal; font-size:small;}
+
+#homes-about{ margin-top:15px; height:203px; border:1px solid #C3D3E3; background:#FBFCFD; }
+#homes-about p{ padding-top:5px; line-height:1.5em; color:#778899; font-size:105%; }

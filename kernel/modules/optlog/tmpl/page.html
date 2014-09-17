@@ -1,0 +1,26 @@
+<html>
+<head>
+ <title>系统管理员-日志管理</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="/cssimg/style.css" type="text/css">
+</head>
+__JAVASCRIPT__
+<body>
+<table width="98%" align=center border="0" cellpadding="0" cellspacing="1" bgcolor="#fAfAfA" >
+
+<form action="" method="post" name="form_3_optlog_1" onsubmit="return script_juge(this);">
+<tr><td colspan="6" align="center">&nbsp;&nbsp;操作人:__OPTUSER__ 操作日期:__YEAR__年__MONTH__月__DAY__日
+<input type=submit name=button value="搜索"> <input type=button name=button value="显示全部" onclick="javascript:location.href='/kernel.php?module=optlog&app=showtmpl&flag=1&opt=listFlag&menuID=__MENUID__'"></td></tr>
+
+<br/>
+</form>
+<form name="form_3_optlog_1" method="post" action="__FORMACTION__" onsubmit="return script_juge(this);">
+<tr class="tablett"><td>id</td><td>用户名称</td><td>日志标题</td><td>日志</td><td>ip</td><td>时间</td></tr>
+<!--mapdata-->
+<tr><td>__ID__</td><td>__USERNAME__</td><td>__TITLE__</td><td>__TEXT__</td><td>__IP__</td><td>__REGTIME__</td></tr>
+<!--mapdata-->
+<tr><td colspan="6" align="center">__BUTTOMSTR__</td></tr>
+</form>
+
+</body>
+</html>

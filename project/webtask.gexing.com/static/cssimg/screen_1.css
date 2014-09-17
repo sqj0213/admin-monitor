@@ -1,0 +1,1506 @@
+/*screen.css*/
+
+<!-- YUI Core CSS -->
+/*
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.5.2
+*/
+/* Menu & MenuBar styles */
+
+.yuimenubar {
+
+    visibility: visible;
+    position: static;
+
+}
+
+.yuimenu .yuimenu,
+.yuimenubar .yuimenu {
+
+    visibility: hidden;
+    position: absolute;
+    top: -10000px;
+    left: -10000px;
+
+}
+
+.yuimenubar li, 
+.yuimenu li {
+
+    list-style-type: none;    
+
+}
+
+.yuimenubar ul, 
+.yuimenu ul,
+.yuimenubar li, 
+.yuimenu li,
+.yuimenu h6,
+.yuimenubar h6 { 
+
+    margin: 0;
+    padding: 0;
+
+}
+
+.yuimenuitemlabel,
+.yuimenubaritemlabel {
+
+    text-align: left;
+    white-space: nowrap;
+
+}
+
+
+/* 
+    The following style rule trigger the "hasLayout" property in 
+    IE (http://msdn2.microsoft.com/en-us/library/ms533776.aspx) for a
+    MenuBar instance's <ul> element, allowing both to clear their floated 
+    child <li> elements.
+*/
+
+.yuimenubar ul {
+
+    *zoom: 1;
+
+}
+
+
+/* 
+    Remove the "hasLayout" trigger for submenus of MenuBar instances as it 
+    is unnecessary. 
+*/
+
+.yuimenubar .yuimenu ul {
+
+    *zoom: normal;
+
+}
+
+/*
+    The following style rule allows a MenuBar instance's <ul> element to clear
+    its floated <li> elements in Firefox, Safari and and Opera.
+*/
+
+.yuimenubar>.bd>ul:after {
+
+    content: ".";
+    display: block;
+    clear: both;
+    visibility: hidden;
+    height: 0;
+    line-height: 0;
+
+}
+
+.yuimenubaritem {
+
+    float: left;
+
+}
+
+.yuimenubaritemlabel,
+.yuimenuitemlabel {
+
+    display: block;
+
+}
+
+.yuimenuitemlabel .helptext {
+
+    font-style: normal;
+    display: block;
+    
+    /*
+        The value for the left margin controls how much the help text is
+        offset from the text of the menu item.  This value will need to 
+        be customized depending on the longest text label of a menu item.
+    */
+    
+    margin: -1em 0 0 10em;
+    
+}
+
+/*
+    PLEASE NOTE: The <div> element used for a menu's shadow is appended 
+    to its root element via JavaScript once it has been rendered.  The 
+    code that creates the shadow lives in the menu's public "onRender" 
+    event handler that is a prototype method of YAHOO.widget.Menu.  
+    Implementers wishing to remove a menu's shadow or add any other markup
+    required for a given skin for menu should override the "onRender" method.
+*/
+
+.yui-menu-shadow {
+
+    position: absolute;
+    visibility: hidden;
+    z-index: -1;
+
+}
+
+.yui-menu-shadow-visible {
+
+    top: 2px;
+    right: -3px;
+    left: -3px;
+    bottom: -3px;
+    visibility: visible;
+
+}
+
+
+/*
+
+There are two known issues with YAHOO.widget.Overlay (the superclass class of 
+Menu) that manifest in Gecko-based browsers on Mac OS X:
+
+    1) Elements with scrollbars will poke through Overlay instances floating 
+       above them.
+    
+    2) An Overlay's scrollbars and the scrollbars of its child nodes remain  
+       visible when the Overlay is hidden.
+
+To fix these bugs in Menu (a subclass of YAHOO.widget.Overlay):
+
+    1) The "overflow" property of a Menu instance's shadow element and child 
+       nodes is toggled between "hidden" and "auto" (through the application  
+       and removal of the "hide-scrollbars" and "show-scrollbars" CSS classes)
+       as its "visibility" configuration property is toggled between 
+       "false" and "true."
+    
+    2) The "display" property of <select> elements that are child nodes of the 
+       Menu instance's root element is set to "none" when it is hidden.
+
+PLEASE NOTE:  
+  
+    1) The "hide-scrollbars" and "show-scrollbars" CSS classes classes are 
+       applied only for Gecko on Mac OS X and are added/removed to/from the 
+       Overlay's root HTML element (DIV) via the "hideMacGeckoScrollbars" and 
+       "showMacGeckoScrollbars" methods of YAHOO.widget.Overlay.
+    
+    2) There may be instances where the CSS for a web page or application 
+       contains style rules whose specificity override the rules implemented by 
+       the Menu CSS files to fix this bug.  In such cases, is necessary to 
+       leverage the provided "hide-scrollbars" and "show-scrollbars" classes to 
+       write custom style rules to guard against this bug.
+
+** For more information on this issue, see:
+
+   + https://bugzilla.mozilla.org/show_bug.cgi?id=187435
+   + SourceForge bug #1723530
+
+*/
+
+.hide-scrollbars * {
+
+	overflow: hidden;
+
+}
+
+.hide-scrollbars select {
+
+	display: none;
+
+}
+
+
+/*
+
+The following style rule (".yuimenu.show-scrollbars") overrides the 
+".show-scrollbars" rule defined in container-core.css which sets the 
+"overflow" property of a YAHOO.widget.Overlay instance's root HTML element to 
+"auto" when it is visible.  Without this override, a Menu would have scrollbars
+when one of its submenus is visible.
+
+*/
+
+.yuimenu.show-scrollbars,
+.yuimenubar.show-scrollbars {
+
+	overflow: visible; 
+
+}
+
+.yuimenu.hide-scrollbars .yui-menu-shadow,
+.yuimenubar.hide-scrollbars .yui-menu-shadow {
+
+    overflow: hidden;
+
+}
+
+.yuimenu.show-scrollbars .yui-menu-shadow,
+.yuimenubar.show-scrollbars .yui-menu-shadow {
+
+    overflow: auto;
+
+}
+/*
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.5.2
+*/
+/* default space between tabs */
+.yui-navset .yui-nav li,
+.yui-navset .yui-navset-top .yui-nav li,
+.yui-navset .yui-navset-bottom .yui-nav li {
+    margin:0 0.5em 0 0; /* horizontal tabs */
+}
+.yui-navset-left .yui-nav li,
+.yui-navset-right .yui-nav li {
+    margin:0 0 0.5em; /* vertical tabs */
+}
+
+/* default width for side tabs */
+.yui-navset .yui-navset-left .yui-nav,
+.yui-navset .yui-navset-right .yui-nav,
+.yui-navset-left .yui-nav,
+.yui-navset-right .yui-nav { width:6em; }
+
+.yui-navset-top .yui-nav,
+.yui-navset-bottom .yui-nav {
+    width:auto;
+}
+.yui-navset .yui-navset-left,
+.yui-navset-left { padding:0 0 0 6em; } /* map to nav width */
+.yui-navset-right { padding:0 6em 0 0; } /* ditto */
+
+.yui-navset-top,
+.yui-navset-bottom {
+    padding:auto;
+}
+/* core */
+
+.yui-nav,
+.yui-nav li {
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+.yui-navset li em { font-style:normal; }
+
+.yui-navset {
+    position:relative; /* contain absolute positioned tabs (left/right) */
+    zoom:1;
+}
+
+.yui-navset .yui-content { zoom:1; }
+
+.yui-navset .yui-nav li,
+.yui-navset .yui-navset-top .yui-nav li, /* in case nested */
+.yui-navset .yui-navset-bottom .yui-nav li {
+    display:inline-block;
+    display:-moz-inline-stack;
+    *display:inline; /* IE */
+    vertical-align:bottom; /* safari: for overlap */
+    cursor:pointer; /* gecko: due to -moz-inline-stack on anchor */
+    zoom:1; /* IE: kill space between horizontal tabs */
+}
+
+.yui-navset-left .yui-nav li,
+.yui-navset-right .yui-nav li {
+    display:block;
+}
+
+.yui-navset .yui-nav a { position:relative; } /* IE: to allow overlap */
+
+.yui-navset .yui-nav li a,
+.yui-navset-top .yui-nav li a,
+.yui-navset-bottom .yui-nav li a {
+    display:block;
+    display:inline-block;
+    vertical-align:bottom; /* safari: for overlap */
+    zoom:1;
+}
+
+.yui-navset-left .yui-nav li a,
+.yui-navset-right .yui-nav li a {
+    display:block;
+}
+
+.yui-navset-bottom .yui-nav li a {
+    vertical-align:text-top; /* for inline overlap (reverse for Opera border bug) */
+}
+
+.yui-navset .yui-nav li a em,
+.yui-navset-top .yui-nav li a em,
+.yui-navset-bottom .yui-nav li a em { display:block; }
+
+/* position left and right oriented tabs */
+.yui-navset .yui-navset-left .yui-nav,
+.yui-navset .yui-navset-right .yui-nav,
+.yui-navset-left .yui-nav,
+.yui-navset-right .yui-nav {
+   position:absolute;
+   z-index:1; 
+}
+
+.yui-navset-top .yui-nav,
+.yui-navset-bottom .yui-nav {
+    position:static;
+}
+.yui-navset .yui-navset-left .yui-nav,
+.yui-navset-left .yui-nav { left:0; right:auto; }
+
+.yui-navset .yui-navset-right .yui-nav,
+.yui-navset-right .yui-nav { right:0; left:auto; }
+
+/*
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.5.2
+yui-2.5.2-reset-fonts-grids.css
+*/
+html{color:#000;background:#FFF;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td{margin:0;padding:0;}
+table{border-collapse:collapse;border-spacing:0;}
+fieldset,img{border:0;}
+address,caption,cite,code,dfn,em,strong,th,var
+{font-style:normal;font-weight:normal;}
+li{list-style:none;}
+caption,th{text-align:left;}
+h1,h2,h3,h4,h5,h6{font-size:100%;font-weight:normal;}
+q:before,q:after{content:'';}
+abbr,acronym {border:0;font-variant:normal;}
+sup {vertical-align:text-top;}
+sub {vertical-align:text-bottom;}
+input,textarea,select{font-family:inherit;font-size:inherit;font-weight:inherit;
+}input,textarea,select{*font-size:100%;}
+legend{color:#000;}
+body {font:13px/1.231 verdana,arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}
+table {font-size:inherit;font:100%;}
+pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
+body{text-align:center;}#ft{clear:both;}
+#doc,#doc2,#doc3,#doc4,.yui-t1,.yui-t2,.yui-t3,.yui-t4,.yui-t5,.yui-t6,.yui-t7{margin:auto;text-align:left;width:57.69em;*width:56.25em;min-width:750px;}
+#doc2{width:73.076em;*width:71.25em;}
+#doc3{margin:auto 10px;width:auto;}
+#doc4{width:74.923em;*width:73.05em;}
+.yui-b{position:relative;}
+.yui-b{_position:static;}
+#yui-main .yui-b{position:static;}
+#yui-main{width:100%;}
+.yui-t1 #yui-main,.yui-t2 #yui-main,.yui-t3 #yui-main{float:right;margin-left:-25em;}
+.yui-t4 #yui-main,.yui-t5 #yui-main,.yui-t6 #yui-main{float:left;margin-right:-25em;}
+.yui-t1 .yui-b{float:left;width:12.30769em;*width:12.00em;}
+.yui-t1 #yui-main .yui-b{margin-left:10.30769em;*margin-left:10.05em;}
+.yui-t2 .yui-b{float:left;width:13.8461em;*width:13.50em;}
+.yui-t2 #yui-main .yui-b{margin-left:14.8461em;*margin-left:14.55em;}
+.yui-t3 .yui-b{float:left;width:23.0769em;*width:22.50em;}
+.yui-t3 #yui-main .yui-b{margin-left:24.0769em;*margin-left:23.62em;}
+.yui-t4 .yui-b{float:right;width:13.8456em;*width:13.50em;}
+.yui-t4 #yui-main .yui-b{margin-right:14.8456em;*margin-right:14.55em;}
+.yui-t5 .yui-b{float:right;width:18.4615em;*width:18.00em;}
+.yui-t5 #yui-main .yui-b{margin-right:19.4615em;*margin-right:19.125em;}
+.yui-t6 .yui-b{float:right;width:20.0769em;*width:20.20em;}
+.yui-t6 #yui-main .yui-b{margin-right:24.0769em;*margin-right:23.62em;}
+.yui-t7 #yui-main .yui-b{display:block;margin:0 0 1em 0;}
+#yui-main .yui-b{float:none;width:auto;}
+.yui-gb .yui-u,.yui-g .yui-gb .yui-u,.yui-gb .yui-g,.yui-gb .yui-gb,.yui-gb .yui-gc,.yui-gb .yui-gd,.yui-gb .yui-ge,.yui-gb .yui-gf,.yui-gc .yui-u,.yui-gc .yui-g,.yui-gd .yui-u{float:left;}
+.yui-g .yui-u,.yui-g .yui-g,.yui-g .yui-gb,.yui-g .yui-gc,.yui-g .yui-gd,.yui-g .yui-ge,.yui-g .yui-gf,.yui-gc .yui-u,.yui-gd .yui-g,.yui-g .yui-gc .yui-u,.yui-ge .yui-u,.yui-ge .yui-g,.yui-gf .yui-g,.yui-gf .yui-u{float:right;}
+.yui-g div.first,.yui-gb div.first,.yui-gc div.first,.yui-gd div.first,.yui-ge div.first,.yui-gf div.first,.yui-g .yui-gc div.first,.yui-g .yui-ge div.first,.yui-gc div.first div.first{float:left;}
+.yui-g .yui-u,.yui-g .yui-g,.yui-g .yui-gb,.yui-g .yui-gc,.yui-g .yui-gd,.yui-g .yui-ge,.yui-g .yui-gf{width:50%;} 
+.yui-gb .yui-u,.yui-g .yui-gb .yui-u,.yui-gb .yui-g,.yui-gb .yui-gb,.yui-gb .yui-gc,.yui-gb .yui-gd,.yui-gb .yui-ge,.yui-gb .yui-gf,.yui-gc .yui-u,.yui-gc .yui-g,.yui-gd .yui-u{width:32%;margin-left:1.99%;}
+.yui-gb .yui-u{*margin-left:1.9%;*width:31.9%;}
+.yui-gc div.first,.yui-gd .yui-u{width:66%;}
+.yui-gd div.first{width:32%;}
+.yui-ge div.first,.yui-gf .yui-u{width:74.2%;}
+.yui-ge .yui-u,.yui-gf div.first{width:24%;}
+.yui-g .yui-gb div.first,.yui-gb div.first,.yui-gc div.first,.yui-gd div.first{margin-left:0;}
+.yui-g .yui-g .yui-u,.yui-gb .yui-g .yui-u,.yui-gc .yui-g .yui-u,.yui-gd .yui-g .yui-u,.yui-ge .yui-g .yui-u,.yui-gf .yui-g .yui-u{width:49%;*width:48.1%;*margin-left:0;}
+.yui-g .yui-gb div.first,.yui-gb .yui-gb div.first{*margin-right:0;*width:32%;_width:31.7%;}
+.yui-g .yui-gc div.first,.yui-gd .yui-g{width:66%;}
+.yui-gb .yui-g div.first{*margin-right:4%;_margin-right:1.3%;}
+.yui-gb .yui-gc div.first,.yui-gb .yui-gd div.first{*margin-right:0;}
+.yui-gb .yui-gb .yui-u,.yui-gb .yui-gc .yui-u{*margin-left:1.8%;_margin-left:4%;}
+.yui-g .yui-gb .yui-u{_margin-left:1.0%;}
+.yui-gb .yui-gd .yui-u{*width:66%;_width:61.2%;}
+.yui-gb .yui-gd div.first{*width:31%;_width:29.5%;}
+.yui-g .yui-gc .yui-u,.yui-gb .yui-gc .yui-u{width:32%;_float:right;margin-right:0;_margin-left:0;}
+.yui-gb .yui-gc div.first{width:66%;*float:left;*margin-left:0;}
+.yui-gb .yui-ge .yui-u,.yui-gb .yui-gf .yui-u{margin:0;}
+.yui-gb .yui-gb .yui-u{_margin-left:.7%;}
+.yui-gb .yui-g div.first,.yui-gb .yui-gb div.first{*margin-left:0;}
+.yui-gc .yui-g .yui-u,.yui-gd .yui-g .yui-u{*width:48.1%;*margin-left:0;}
+s .yui-gb .yui-gd div.first{width:32%;}
+.yui-g .yui-gd div.first{_width:29.9%;}
+.yui-ge .yui-g{width:24%;}
+.yui-gf .yui-g{width:74.2%;}
+.yui-gb .yui-ge div.yui-u,.yui-gb .yui-gf div.yui-u{float:right;}
+.yui-gb .yui-ge div.first,.yui-gb .yui-gf div.first{float:left;}
+.yui-gb .yui-ge .yui-u,.yui-gb .yui-gf div.first{*width:24%;_width:20%;}
+.yui-gb .yui-ge div.first,.yui-gb .yui-gf .yui-u{*width:73.5%;_width:65.5%;}
+.yui-ge div.first .yui-gd .yui-u{width:65%;}
+.yui-ge div.first .yui-gd div.first{width:32%;}
+#bd:after,.yui-g:after,.yui-gb:after,.yui-gc:after,.yui-gd:after,.yui-ge:after,.yui-gf:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+#bd,.yui-g,.yui-gb,.yui-gc,.yui-gd,.yui-ge,.yui-gf{zoom:1;}
+
+/*
+Copyright (c) 2008, Yahoo! Inc. All rights reserved.
+Code licensed under the BSD License:
+http://developer.yahoo.net/yui/license.txt
+version: 2.5.2
+*/
+h1{font-size:138.5%;}h2{font-size:123.1%;}h3{font-size:108%;}h1,h2,h3{margin:1em 0;}h1,h2,h3,h4,h5,h6,strong{font-weight:bold;}abbr,acronym{border-bottom:1px dotted #000;cursor:help;} em{font-style:italic;}blockquote,ul,ol,dl{margin:1em;}ol,ul,dl{margin-left:2em;}ol li{list-style:decimal outside;}ul li{list-style:disc outside;}dl dd{margin-left:1em;}th,td{border:1px solid #000;padding:.5em;}th{font-weight:bold;text-align:center;}caption{margin-bottom:.5em;text-align:center;}p,fieldset,table,pre{margin-bottom:1em;}input[type=text],input[type=password],textarea{width:12.25em;*width:11.9em;}
+
+
+body {
+  font-size: 12px;
+}
+
+div#doc2 {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+h1, .h1 {
+  color:#E47911;
+  font-size:170%;
+  font-weight:normal;
+  margin:1.5em 0 1em 0;
+  padding:0;
+}
+
+h1.blue {
+  color: #004b91;
+}
+
+h1.green {
+  color: #22BA91;
+}
+
+h1.hero {
+  border: 1.5px solid #ccc;
+  padding: 1em;
+}
+
+h2, .h2 {
+  color:#146EB4;
+  font-size:145%;
+  font-weight:normal;
+  margin:1em 0 1em 0;
+  padding:0;
+}
+
+h2.orange {
+  color:#E47911;
+}
+
+h3, .h3{
+  font-size:120%;
+  font-weight:bold;
+  margin:1em 0 0.1em;
+}
+
+h4, .h4 {
+  color:#666666;
+  font-size:105%;
+  font-weight:bold;
+  margin:1em 0 0.5em;
+}
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: #004B91; 
+  text-decoration: none;
+}
+
+a:hover {
+  color:#E47911;
+  text-decoration:underline;
+}
+
+hr {
+        border: 0;
+	height:1px; 
+	margin:0px; 
+	color:#CCC;
+        background-color: #ccc; 
+	clear:both;
+	}
+
+ul {
+  margin-left: 0;
+  padding-left: 10px;
+  list-style: none;
+  list-style-type: none;
+}
+
+ul li {
+  padding-left: 10px;
+  list-style-type: none;
+  background-image: url(http://media.amazonwebservices.com/orange_bullet.png);
+  background-repeat: no-repeat;
+  background-position: 0 .5em;
+  margin-bottom: 0.5em;
+}
+
+.yui-navset ul li {
+  background-image: none;
+  padding-left: 0px;
+}
+
+.yui-skin-sam .yui-navset .yui-nav, .yui-skin-sam .yui-navset .yui-navset-top .yui-nav {
+  border-color: #DDDDDD;
+  border-width: 0 0 1px;
+}
+
+table {
+  width: 100%;
+  border: 0;
+  margin: 0;
+  padding: 0; 
+}
+
+td {
+  border: 0;
+  vertical-align: top;
+}
+
+th {
+  border: none;
+  text-align: right;
+}
+
+pre {
+  background-color:#EFF7FF;
+  border:1px dashed #333333;
+  font-family:"Courier New",Courier,mono;
+  font-size:12px;
+  overflow:auto;
+  padding:15px 10px;
+  width:550px;
+}
+
+#doc4 {
+  width: 950px;
+}
+
+/* make IE work with home page columns */
+.yui-g .yui-u, .yui-g .yui-g, .yui-g .yui-gb, .yui-g .yui-gc, .yui-g .yui-gd, .yui-g .yui-ge, .yui-g .yui-gf {
+  width: 48%;
+}
+
+/* force the width to 210px rather than 180 */
+.yui-t2 .yui-b {
+  width:16.1538em;
+}
+
+/* Make the gutter between the two be 35px */
+.yui-t2 #yui-main .yui-b {
+  margin-left:18.8461em;
+}
+
+.yui-t6 .yui-b {
+  float:right;
+  width:20em;
+}
+
+.txt95 {
+  font-size: 95%;
+}
+
+.txt90{
+  font-size: 90%;
+}
+
+.txt85{
+  font-size: 85%;
+}
+.txt80{
+  font-size: 80%;
+}
+.lh17{
+  line-height:1.7em;
+}
+.lh14{
+  line-height:1.4em;
+}
+
+
+.txt110{
+  font-size: 110%;
+}
+.txt120{
+  font-size: 120%;
+}
+.txt145{
+  font-size: 145%;
+}
+.padlr1em {
+  padding: 0 1em 0 1em;
+}
+.pad1em {
+  padding: 1em;
+}
+.padbot2 {
+  padding-bottom: 2px;
+}
+.padbot5 {
+  padding-bottom: 5px;
+}
+.padtop5 {
+	padding-top: 5px; 
+}
+.padtop6 {
+  padding-top: 6px;
+}
+.padlt8 {
+	padding-left: 8px; 
+}
+.padbot10 {
+  padding-bottom: 10px;
+}
+.padtop10 {
+  padding-top: 10px;
+}
+.padrt10 {
+  padding-right: 10px;
+}
+.padlt12 {
+  padding-left: 12px; 
+}
+.padlt13 {
+  padding-left: 13px; 
+}
+.padbot13 {
+  padding-bottom: 13px;
+}
+.padtop20 {
+  padding-top: 20px;
+}
+.padbot20 {
+  padding-bottom: 20px;
+}
+.padlt20 {
+  padding-left: 20px;
+}
+.padtop25 {
+  padding-top: 25px;
+}
+.padlt10 {
+  padding-left: 10px;
+}
+.padlt25 {
+  padding-left: 25px;
+}
+.padlt30 {
+  padding-left: 30px;
+}
+.padrt20 {
+  padding-right: 20px;
+}
+.martop-10 {
+ margin-top: -10px;
+}
+.bold {
+  font-weight:bold;
+}
+.normal {
+  font-weight:normal;
+}
+.orangedk{
+ color:#E47911;
+}
+.aligntop {
+   align: top
+}
+.alignrt {
+   align: right
+}
+.right{
+   float:right
+}
+.left{
+   float: left
+}
+
+.carat {
+   font-weight: bold; 
+   color: #E47911;
+   margin-right:0.10em;
+}
+
+.title_box {
+  border: 1px solid #DDD;
+}
+.clear {
+  clear:both;
+}
+.bordrt {
+  border-right: 1px solid #CCC;
+  padding-right: 15px; 
+}
+
+.colrt50 {
+  float: right; 
+  width: 50%; 
+  position: relative;
+}
+.collt50 {
+  float: left; 
+  width: 50%; 
+  position: relative;
+}
+.collt25 {
+  float: left; 
+  width: 25%; 
+  position: relative;
+}
+.colrt30 {
+  float: right; 
+  width: 30%; 
+  position: relative;
+}
+.colrt75 {
+  float: right; 
+  width: 75%; 
+  position: relative;
+}
+.width50{
+  width:50%;
+}
+.collt65 {
+  float: left; 
+  width: 65%; 
+  position: relative;
+}
+.title_box h1 {
+  color: #004b91;
+  margin-top: -15px;
+  margin-left: -6px;
+  margin-bottom: 10px;
+  _margin-top: -6px;
+  _margin-left: -5px;
+  position: relative;
+  overflow: visible;
+}
+
+.title_box h1 span {
+  padding: 4px;
+  padding-right: 6px;
+  background-color: white;
+}
+
+div#hd {
+  margin-bottom: 1em;
+}
+
+div#signup {
+  background: url("http://media.amazonwebservices.com/bg_org_signup.gif") no-repeat top left;
+  text-align: center;
+  padding: 0.7em 0 0 0;
+}
+
+div#signup a{
+  color: white;
+}
+
+div#signup img {
+  margin-top: 0.7em;
+  margin-bottom: 0.7em;
+}
+
+.orange {
+  color: #ff9900;
+}
+.grey666 {
+  color:#666666;
+}
+.greyccc {
+  color:#CCCCCC;
+}
+input.w200, select.w200, textarea.w200{
+   border: solid 1px #666;
+   width:200px;
+   padding:2px;
+}
+
+/* footer */
+
+div#ft {
+  font-size: 85%;
+  padding-top: 3em;
+  text-align: center;
+}
+
+ul.h_bar li {
+  display: inline;
+  list-style-type: none;
+  padding-right: 18px;
+  padding-left: 18px;
+  border-left: 1px solid #CCC;
+  background-image: none;
+}
+
+ul.h_bar li.first {
+  padding-left: 0;
+  border-left: none;
+}
+
+ul.h_bar.hr{
+  border-top: 1px solid #CCC;
+}
+
+table.no-border th, table.no-border td {
+  border: none;
+}
+
+table h2 {
+  margin-top: 0;
+}
+
+.here {
+  color: black;
+}
+
+/* awsTabSet.css */
+
+/* Common colors: orange: #e47911, blue #004b91; */
+
+/* Tabbed style*/
+
+/* Don't display tabset headers when the tabs are visible (see awsTabSetFlat below, marked display: block)*/
+.awsTabSet .awsTabSetHeader {
+	display: none;
+}
+
+.awsTabSet .yui-nav {
+	 border-bottom: 1px solid #ccc; 
+}
+
+.awsTabSet .yui-nav a {
+	/* cursor: default; */
+	padding: 6px 12px 2px 12px;
+	font-weight: bold;
+	color: #004b91;
+	text-decoration: none;
+	margin: 0;
+}
+
+.awsTabSet div.yui-content div {
+	margin-top: 0.6em; 
+}
+
+.awsTabSet div.yui-content div div {
+	margin-top: 0; /* Reset above for sub-divs. */
+}
+
+.awsTabSet .yui-nav .selected a {
+	color: black;
+	background: white url(http://media.amazonwebservices.com/awsTabSetActiveBackground2.gif) top left repeat-x;  /* includes what is effectively a border-top: 1px */
+}
+
+.awsTabSet .yui-nav li {
+	border-top: 0;
+	border-bottom: 1px solid #ccc;
+	margin: 0;
+	padding: 0;
+	margin-bottom: -1px;
+        padding-bottom: 2px;
+}
+
+.awsTabSet .yui-nav li.selected {
+	border-bottom: 1px solid white;
+	background: white url(http://media.amazonwebservices.com/awsTabSetRoundEdgeHelper.gif) top left repeat-x; /* Image is missing a pixel at the top to make it look slightly rounded. */
+	padding: 0px 1px 0px 1px;
+}
+
+/* Default "flat" appearance */
+.awsTabSet ul.awsTabSetFlat {
+	padding: 8px 0;
+	border-top: 1px dotted #ccc;
+	border-bottom: 1px dotted #ccc;
+}
+
+.awsTabSet .awsTabSetFlat .awsTabSetHeader {
+	color: #e47911;
+	font-size: 136%;
+	font-weight: bold;
+	display: block;
+}
+
+.awsTabSet div.awsTabSetFlat div {
+	padding: 0.6em 0 0 0;
+	border-bottom: 1px solid #ccc;
+}
+
+/* Override the above for divs underneath the one we want styled. */
+.awsTabSet div.awsTabSetFlat div div {
+	padding: 0;
+	border-bottom: 0;
+}
+
+.awsTabSet ul.awsTabSetFlat li {
+	font-weight: bold;
+	padding-left: 0;
+	background: transparent url(http://media.amazonwebservices.com/awsTabSetFlatArrow.gif) center left no-repeat;
+	padding: 0 12px 0 12px;
+	list-style-type: none;
+	display: inline;
+	font-size: 110%;
+}
+
+/* Detail page sub-style for flat tabs */
+.awsTabSet.detail ul.awsTabSetFlat {
+	float: left;
+}
+
+.awsTabSet.detail div.awsTabSetFlat {
+	clear: both;
+}
+
+.awsTabSet.detail ul.awsTabSetFlat li {
+	display: block;
+	float: left;
+	width: 40%;
+}
+
+.awsTabSet .awsTabSetFiller {
+	width: 2px%;
+}
+
+
+/**
+ * awsGlobalNav.css
+ * The following are the common colors:
+ * Main Blue: #004b91;
+ * Selected Items: #edf7ff; (same as retail)
+ * Menu borders: #ccc;
+ */
+
+/* Default, pre-JS Navigation bar links */
+.awsGlobalNav #awsDefaultGlobalNav a {
+	text-decoration: none;
+	color: #004b91;
+	font-weight: bold;
+}
+
+.awsGlobalNav #awsDefaultGlobalNav div {
+	padding: 6px 20px 6px 14px;
+	float: left;
+	border: 1px solid transparent;
+	border-left: 1px solid #ccc;
+}
+
+/* Haakon deleted this because it breaks many browsers...check IE and Firefox on Mac before restoring! */
+.awsGlobalNav_DELETED #awsGlobalNavYUIWidget div {
+	float: right;
+}
+
+.awsGlobalNav #awsDefaultGlobalNav div:first-child {
+	border-left: none;
+}
+
+/* Menu bar: reset some styles to something similar to default */
+.awsGlobalNav .yuimenubar {
+	border: 0;
+	/* line-height: 1.6; This upsets the menus */
+        /* font-size: 14px;*/
+}
+
+/* Common styles for menu bar/item labels, which are anchors. */
+.awsGlobalNav .yuimenubaritemlabel,
+.awsGlobalNav .yuimenuitemlabel {
+	text-decoration: none;
+	cursor: pointer;
+	color: #004b91;
+}
+
+/* Reset a stupid style thing */
+.awsGlobalNav ul li,
+.awsGlobalNav ul li {
+	background-image: none;
+}
+
+/* Menu Bar Item Labels */
+.awsGlobalNav .yuimenubaritemlabel {
+	font-weight: bold;
+	padding: 6px 10px 6px 10px;
+	border: 1px solid transparent;
+	border-left: 1px solid #ccc;
+	position: relative;
+	background-color: white;
+        font-size:13px;
+	font-family: Verdana;
+}
+
+/* First Menu Bar Item Label: no left border */
+.awsGlobalNav li.yuimenubaritem.first-of-type .yuimenubaritemlabel {
+	border-left: 1px solid transparent;
+}
+
+/* Menu Bar Item Label: little down arrow for menu bar items with a menu. */
+.awsGlobalNav .yuimenubaritemlabel-hassubmenu {
+	padding: 6px 20px 6px 14px;
+	background: url(http://media.amazonwebservices.com/yuimenubarlabel-hassubmenu.gif) center right no-repeat;
+}
+
+/* Menu Bar Item Labels: selected states */
+.awsGlobalNav .yuimenubaritemlabel-selected {
+	border-top: 1px solid #ccc;
+	z-index: 10;
+	background-color: white;
+	-moz-border-radius-topleft: 2px;
+	-moz-border-radius-topright: 1px;
+	-webkit-border-top-left-radius: 2px;
+	-webkit-border-top-right-radius: 1px;
+}
+
+.awsGlobalNav li.yuimenubaritem.first-of-type .yuimenubaritemlabel-selected {
+	border-left: 1px solid #ccc;
+}
+
+/* Menus */
+.awsGlobalNav .yuimenu .bd {
+	position: relative;
+	margin-top: -1px;
+	border: 1px solid #ccc;
+	z-index: 9;
+	padding: 0 0 4px 0;
+	background-color: white;
+
+	/* Round borders: not necessary */
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+
+	-moz-border-radius-topleft: 0;
+	-webkit-border-top-left-radius: 0;
+}
+
+/* Regular menu items */
+.awsGlobalNav .yuimenuitemlabel {
+	font-size: 94%;
+	/* padding: 2px 24px; */
+	padding-right: 24px;
+	padding-left: 24px;
+	line-height: 1.7;
+	background: url(http://media.amazonwebservices.com/yuimenuitemlabel.gif) center left no-repeat;
+	background-repeat: no-repeat;
+	font-family: Verdana;
+}
+
+.awsGlobalNav .yuimenuitem.first-of-type .yuimenuitemlabel {
+	padding-top: 1px;
+}
+
+/* Disabled menu items*/
+.awsGlobalNav .yuimenuitemlabel-disabled {
+	color: black;
+	background: none;
+	font-weight: bold;
+	padding: 2px 24px 2px 8px;
+      cursor: text;
+	font-family: Verdana;
+}
+
+/* Menu items with a submenu */
+.awsGlobalNav .yuimenuitemlabel-hassubmenu {
+	color: black;
+	background: none;
+	font-weight: bold;
+	padding: 2px 24px 2px 8px;
+	font-family: Verdana;
+}
+
+.awsGlobalNav .yuimenuitemlabel-selected {
+	color:#e47911; 
+	text-decoration:underline;
+}
+
+.awsGlobalNav .yuimenuitemlabel-hassubmenu {
+	background: url(http://media.amazonwebservices.com/yuimenubarlabel-hassubmenu.gif) center right no-repeat;
+}
+
+/* Little hack - the ID of the last menu is set to lastMenu to allow me to set a right border on this particular menu */
+.awsGlobalNav #lastMenu .yuimenubaritemlabel-selected {
+    border-right: 1px solid #ccc;
+}
+
+.awsGlobalNav .yui-menu-shadow-visible {
+	background-color: black;
+	/*left: 2px;
+	top: 2px;
+	bottom: -2px;
+	right: -2px; */
+	left: 2px;
+	top: 2px;
+	*left: 1px; /* IE ignores the absolute positions... ?? This is a "least crappy" appearance */
+	opacity: 0.1;
+	filter: alpha(opacity = 10);
+	-moz-border-radius: 1px;
+	-webkit-border-radius: 1px;
+}
+
+/* This prevents a rendering error in IE on menu items with a submenu  */
+.awsGlobalNav .yuimenuitem-hassubmenu {
+	border-bottom: solid 1px transparent;
+}
+
+/* Order is important on this due to an IE6 bug. */
+.awsGlobalNav .yuimenuitem-hassubmenu.yuimenuitem-selected {
+	background-color: #edf7ff;
+}
+
+/**
+ * AWS Side Nav
+ *
+ * The following are the common colors:
+ * Main Blue: #004b91;
+ * Menu borders: #ccc;
+ */
+
+.awsSideNav {
+	width: 100%;
+}
+ 
+.awsSideNav .awsSideNavMenu a,
+.awsSideNav .awsSideNavHeader {
+	cursor: pointer;
+	color: #004b91;
+	text-decoration: none;
+
+}
+.awsSideNav .awsSideNavMenu a:hover{
+        color:#e47911; 
+	text-decoration:underline;
+}
+
+.awsSideNav .awsSideNavPart .awsSideNavHeader {
+	/* cursor: default; */
+	padding: 5px 0 4px 0px;
+	background: url(http://media.amazonwebservices.com/awsSideNavHeaderBackground.gif) top left repeat-x;
+	font-weight: bold;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+.awsSideNav .awsSideNavPart-hidden .awsSideNavHeader {
+	background: none;
+	border-bottom: 0;
+}
+
+.awsSideNav .awsSideNavPart .awsSideNavHeader span {
+	padding: 0 0 0 20px;
+	background: url(http://media.amazonwebservices.com/awsSideNavHeaderContract.gif) center left no-repeat;
+}
+
+.awsSideNav .awsSideNavPart-hidden .awsSideNavHeader span {
+	background: url(http://media.amazonwebservices.com/awsSideNavHeaderExpand.gif) center left no-repeat;
+}
+
+.awsSideNav .awsSideNavMenu {
+	overflow: hidden;
+}
+
+.awsSideNav .awsSideNavMenu ul {
+	margin: 4px 0px 6px 16px;
+        padding-left: 5px;
+        font-size: 94%;
+}
+
+.awsSideNav .awsSideNavMenu li {
+  list-style-type: none;
+  background-image: url(http://media.amazonwebservices.com/orange_bullet.png);
+  background-repeat: no-repeat;
+  background-position: 0em .4em;
+}
+
+#awsSideNav {
+	float: left;
+	margin-bottom: 20px;
+}
+
+.awsSideNavHeader span { display: block; }
+
+.awsSideNav .awsSideNavPart-hidden .awsSideNavHeader .sideNavSupplimental {
+	 background: none;
+}
+	
+.awsSideNav .awsSideNavPart .awsSideNavHeaderStatic {
+	 padding: 5px 0 4px 10px;
+	 font-weight: bold;
+	 border-top: 1px solid #ccc;
+}
+	
+.sideNavSupplimental a {
+	 text-decoration: none;
+}
+	
+.sideNavSupplimental a:visited {
+	 color: #004b91;
+	 cursor: pointer;
+}
+	
+.sideNavSupplimental a:hover{
+	 color: #e47911;
+	 text-decoration: underline;
+	 cursor: pointer;
+}
+/**
+ * AWS Side Nav
+ *
+ * The following are the common colors:
+ * Main Blue: #004b91;
+ * Menu borders: #ccc;
+ */
+
+.S-awsSideNav {
+	width: 100%;
+}
+ 
+.S-awsSideNav .S-awsSideNavMenu a,
+.S-awsSideNav .S-awsSideNavHeader {
+	cursor: pointer;
+	color: #004b91;
+	text-decoration: none;
+
+}
+.S-awsSideNav .S-awsSideNavMenu a:hover{
+        color:#e47911; 
+	text-decoration:underline;
+}
+
+.S-awsSideNav .S-awsSideNavPart .S-awsSideNavHeader {
+	/* cursor: default; */
+	padding: 5px 0 4px 10px;
+	background: url(http://media.amazonwebservices.com/awsSideNavHeaderBackground.gif) top left repeat-x;
+	font-weight: bold;
+	border-top: 1px solid #ccc;
+	/* border-bottom: 1px solid #ccc; */
+}
+
+.S-awsSideNav .S-awsSideNavPart-hidden .S-awsSideNavHeader {
+	background: none;
+	border-bottom: 0;
+}
+
+.S-awsSideNav .S-awsSideNavPart .S-awsSideNavHeader span {
+	padding: 0 0 0 0px;
+}
+
+.S-awsSideNav .S-awsSideNavPart-hidden .S-awsSideNavHeader span {
+	padding: 0 0 0 10px;
+}
+
+.S-awsSideNav .S-awsSideNavMenu {
+	overflow: hidden;
+}
+
+.S-awsSideNav .S-awsSideNavMenu ul {
+	list-style-type: square;
+	color: orange;
+	margin: 0px 0px 0px 0px;
+        padding-left: 5px;
+        font-size: 94%;
+}
+
+#S-awsSideNav {
+	float: left;
+	margin-bottom: 20px;
+}
+
+.S-awsSideNavHeader span { display: block; }
+
+#aws_website_hero {
+  z-index: 0;
+  /* opacity: 0; This breaks the hero area */
+}
+
+dl.faq {
+  margin: 0;
+}
+
+dl.faq dt {
+  font-weight: bold;
+  margin-bottom: 0.3em;
+}
+
+dl.faq dd {
+  margin-bottom: 0.7em;
+  margin-left: 0;
+}
+
+div.faq_links li {
+  margin-bottom: 3px;
+}
+
+.carat_bullet {
+  padding: 0px 0px 0px 5px;
+  font-size:90%;
+  line-height:1.4em;
+  text-decoration: none;
+}
+
+.carat_bullet ul li {
+  list-style-type: none;
+  background-image: url(http://media.amazonwebservices.com/orange_carat.png);
+  background-repeat: no-repeat;
+  background-position: 0 .5em;
+  margin-bottom: 0.5em;
+}
+
+.case_studies_header {
+  padding: 5px 0px 5px 5px;
+  margin:-15px 0px 0px -7px;
+  overflow:visible;
+  position:relative;
+}
+
+.case_studies_header_font {
+  color:#E47911;
+  font-size:120%;
+  font-weight:bold;
+  background-color:#fff;
+  padding: 0px 5px 3px 0px;
+}
+
+.case_studies_box {
+  border: 1px solid #DDD;
+}
+
+.case_studies_body_text {
+  padding: 3px 5px 3px 13px;
+  font-size:90%;
+  color: #666;
+  line-height:1.4em;
+} 
+
+.case_studies_image {
+  padding: 11px 0px 0px 13px;
+}
+
+.case_studies_box hr {
+	border:0; 
+	border-bottom:1px solid #dedede; 
+	margin:0px 15px 0px 15px; 
+	}
+
+.arrow_bullets ul li {
+  margin-left: 6px;
+  padding-left: 14px;
+  list-style-type: none;
+  vertical-align:top;
+  background-image: url(http://media.amazonwebservices.com/arrow_anchor_bullet.gif);
+  background-repeat: no-repeat;
+  background-position:top left;
+  color:#146EB4;
+  font-size:120%;
+  font-weight:bold;
+}
+
+.bullet_indent ul li {
+  margin-left: 6px;
+  padding-left: 14px;
+  list-style-type: none;
+  background-image: url(http://media.amazonwebservices.com/orange_bullet.png);
+  background-repeat: no-repeat;
+  background-position: 0 .5em;
+}
+
+.resources_section {
+  width:90%;
+  border:0;
+  border-bottom:1px solid #CCC;
+  color:#146EB4;
+  font-size:145%;
+  font-weight:normal;
+  margin: 10px 0px 0px 0px;
+  padding: 0px 0px 3px 0px;	
+}
+
+.nav_bullets ul li {
+  margin-left: 0px;
+  padding-left: 0px;
+  list-style-type: none;
+  background-image: url(http://media.amazonwebservices.com/orange_bullet.png);
+  background-repeat: no-repeat;
+  background-position: 0 .5em;
+}
+
+.product_highlights {
+  color:#146EB4;
+  font-size:145%;
+  font-weight:normal;
+  margin: 10px 0px 0px 0px;
+  padding: 0;
+}
+
+.padding_margin_zero {
+  margin:0px;
+  padding:0px;
+}
+
+.mar_top_20 {
+  margin-top:20px;
+}
+
+.mar_top_25 {
+  margin-top:25px;
+}
+
+.mar_top_10 {
+  margin-top:10px;
+}
+
+.underline a {
+  text-decoration:underline;
+}
+
+.no-underline a {
+  text-decoration:none;
+}
+
+.support-nav {
+	padding: 5px 0 4px 10px;
+	font-weight: bold;
+	border-top: 1px solid #ccc;
+}
+
+.courier {
+  font-family: "Courier New", Courier, mono;
+}
+
+.legal_bullets ul {
+  margin:0px 0px 3px 20px;
+}
+
+.legal_bullets ol li {
+  padding-bottom:3px;
+}
+
+.legal_bullets ul li {
+  margin-bottom:0px;
+}
+
+.padded_ol_list ol li {
+  margin-bottom:8px;
+}
+
+.folder_bullet ul li {
+  list-style-type: none;
+  background-image: url(http://media.amazonwebservices.com/category-folder-16x16.gif);
+  background-repeat: no-repeat;
+  background-position: 0em 0.3em;
+  margin-bottom: 0em;
+  padding-left: 1.9em;
+  line-height:2em;
+}
+
+.tan-table td {
+  border-bottom:1px solid #CCCC99;
+  line-height:1.0;
+}
+
+.tan-table-grid td {
+  border:1px solid #CCCC99;
+  line-height:1.0;
+}
+
+.tab-fix a {
+  text-decoration: none;
+}

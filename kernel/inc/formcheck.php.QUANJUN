@@ -1,0 +1,236 @@
+<?php
+define( 'ABS_CUR_DIR_INC', dirname( __FILE__ ).'/' );
+require_once ( ABS_CUR_DIR_INC.'../baselib/baseClass.php' );
+require_once ( ABS_CUR_DIR_INC.'../function/webOptCode.php' );
+class formCheck
+{
+
+	private $srcHtml = '';//tmpl源码
+	private $formArr = array();//初始化表单数组
+	private $filterFormArr = array();//初始化表单数组
+	private $formUnit = array();//过滤后的标准结构数组，用于生成script脚本
+	private $scriptString = '';	
+	private $desHtml = '';
+	function __construct( $arg="", $REP_TMP=array() )
+	{
+		global $GLOBAL;
+		if ( Empty( $arg ) )
+			$arg = $GLOBAL['htmlDefine']['tmplPath'];
+		if ( Empty( $REP_TMP ) )
+			$REP_TMP = $GLOBAL['htmlDefine']['defaultReplaceArray'];
+		if ( is_null( $arg ) )
+			throw new Exception( '构造函数输入内容不能为空' );
+		if ( is_file( $arg ) )
+			$this->srcHtml = file_get_contents( $arg );
+		else
+		{
+			$this->srcHtml = $arg;
+			//print_r( $arg );
+			throw new Exception( 'file is not exist,info:'.$arg );
+		}
+		$out = array();
+		//预先处理自定义的脚本与html代码的替换
+		$arr_len=count( $REP_TMP );
+		if ( $arr_len ===0 )//若未传入参数则填加默认的return true函数
+		{
+			//echo "----------------------------------";
+			$tmpstr = getDefaultJavascript();
+			$this->srcHtml = str_ireplace("<body ", $tmpstr."<body ", $this->srcHtml );
+			$this->srcHtml = str_ireplace("< body ", $tmpstr."<body ", $this->srcHtml );
+			$this->srcHtml = str_ireplace("<body>", $tmpstr."<body>", $this->srcHtml );
+		}
+		else
+		for ( $i = 0; $i < $arr_len; $i++ )
+		{
+			$this->srcHtml = str_ireplace( key( $REP_TMP ), $REP_TMP[key( $REP_TMP )], $this->srcHtml );
+			next( $REP_TMP );
+		}
+		preg_match_all( FORM_REG, $this->srcHtml, $out);//取得表单与表单里的元素
+		$this->formArr = $out[0];
+		global $GLOBAL;
+		if ( $GLOBAL['debugFlag'] == "on" )
+			echo "__construct,f=".__FILE__.",l=".__LINE__."<br>";
+	}
+	function __destruct(  )
+	{
+		global $GLOBAL;
+		if ( $GLOBAL['debugFlag'] == "on" )
+			echo "__destruct,f=".__FILE__.",l=".__LINE__."<br>";
+		$this->srcHtml = '';
+		$this->formArr = array();
+		$this->filterFormArr = array();
+		$this->formUnit = array();
+		$this->scriptString = '';
+		$this->desHtml = '';
+	}
+	public function replaceSrcCode( $srcCode, $desCode )
+	{
+		$this->srcHtml = str_ireplace( $srcCode, $desCode, $this->srcHtml );
+		preg_match_all( FORM_REG, $this->srcHtml, $out);//取得表单与表单里的元素
+		$this->formArr = array();
+		$this->formArr = $out[0];
+	}
+	public function getHtmlCode( $formAction='', $REP_TMP=array() )
+	{
+		global $GLOBAL;
+		if ( Empty( $formAction ) ) 
+			$formAction = $GLOBAL['modulesInfo']['formAction'];
+		if ( Empty( $REP_TMP ) )
+			$REP_TMP = $GLOBAL['modulesInfo']['comboxDefaultSelected'];
+		$this->getFieldKeyValue( );
+		$this->splitFormUnit( );
+		$this->buildScript( );
+		$this->desHtml = str_ireplace("</form", '<input type=hidden name='.FORM_NAME.'><input type=hidden name='.UPD_ID_NAME.' value="'.$GLOBAL['runData']['updID'].'"><input type=hidden name='.UNION_FIELD.' value="'.$GLOBAL['modulesInfo']['unionField'].'"><input type=hidden name='.MENU_ID.' value="'.$GLOBAL['runData']['menuID'].'"></form', $this->srcHtml );//设置表单名称的变量便于后端处理
+		$this->desHtml = str_ireplace("</ form", '<input type=hidden name='.FORM_NAME.'><input type=hidden name='.UPD_ID_NAME.' value="'.$GLOBAL['runData']['updID'].'"><input type=hidden name='.UNION_FIELD.' value="'.$GLOBAL['modulesInfo']['unionField'].'"><input type=hidden name='.MENU_ID.' value="'.$GLOBAL['runData']['menuID'].'"></ form', $this->desHtml );//设置表单名称的变量便于后端处理
+		$this->desHtml = str_ireplace("__CSSFILEPATH__", $GLOBAL['modulesInfo']['cssPath'], $this->desHtml );
+
+		//$this->desHtml = str_ireplace("</form", '<input type=hidden name='.MENU_ID.' value=__MENU_ID__></form', $this->srcHtml );//设置表单名称的变量便于后端处理
+		//$this->desHtml = str_ireplace("< /form", '<input type=hidden name='.MENU_ID.' value=__MENU_ID__></form', $this->srcHtml );//设置表单名称的变量便于后端处理
+
+
+		$this->desHtml = str_ireplace("<body ", $this->scriptString."<body ", $this->desHtml );
+		$this->desHtml = str_ireplace("< body ", $this->scriptString."<body ", $this->desHtml );
+		$this->desHtml = str_ireplace("<body>", $this->scriptString."<body>", $this->desHtml );
+		//$this->desHtml = str_ireplace("</body>", getNoRightMenuScript()."</body>", $this->desHtml );
+		$this->desHtml = str_ireplace("__FORMACTION__", $formAction, $this->desHtml );
+		$this->desHtml = str_ireplace("__CHECKBOXONCLICK__", " onclick=\"javascript:chk_box(this);\"", $this->desHtml );
+		
+		//print_r( $REP_TMP );
+		if ( !Empty( $REP_TMP ) )
+		while ( current( $REP_TMP ) !== false )
+		{//负责替换下拉列表框里的选中项
+			$this->desHtml = str_ireplace( "__".key( $REP_TMP ).$REP_TMP[key( $REP_TMP )]."SELECTED__", "selected", $this->desHtml );
+			$this->desHtml = preg_replace("/__".key( $REP_TMP )."(\w+)*SELECTED__/", "", $this->desHtml );
+
+			next( $REP_TMP );
+		}
+		return $this->desHtml;
+	}
+	public function replaceArray( $REP_TMP=array() )
+	{
+		while ( current( $REP_TMP ) )
+		{
+			$arr_len=count( $REP_TMP );
+			for ( $i = 0; $i < $arr_len; $i++ )
+			{
+				$this->srcHtml = str_ireplace( key( $REP_TMP ), $REP_TMP[key( $REP_TMP )], $this->srcHtml );
+				next( $REP_TMP );
+			}
+		}
+		return $tmplStr;
+	}
+	private function getFieldKeyValue(  )
+	{
+		$form = $this->formArr;
+//		print_r( $form );
+//		exit;
+		$array_len = count( $form );
+		for ($i = 0; $i < $array_len; $i++ )
+		{
+			preg_match( FIELD_KEY_VALUE, $form[$i], $out1 );//取得表单里所有元素的键与值
+			if ( $i == 0 )
+			{
+				$form[ $i ] = str_replace( ' ', '', $form[ $i ] );
+				$form[ $i ] = str_replace( '\t', '', $form[ $i ] );
+				$form[count( $form )] = substr( $form[ $i ], strpos( $form[ $i ], "return" ) + 6,strpos( $form[ $i ], "(" )- strpos( $form[ $i ], "return" ) - 6 );//取得form校验的javascript函数名
+			}
+			$form[ $i ] = substr( $out1[0], strpos( $out1[0], '=' ) + 1 );
+			$form[ $i ] =  str_replace( '"',''  ,$form[$i] ) ;
+			$form[ $i ] =  str_replace( ' ',''  ,$form[$i] ) ;
+			$form[ $i ] =  str_replace( '\t',''  ,$form[$i] ) ;
+		}
+
+		$this->filterFormArr = $form;
+	}
+
+	private function splitFormUnit(  )
+	{
+		$form = $this->filterFormArr;
+		$j = 0;
+//		print_r($form);
+		for ($i=0;$i<count($form);$i++)
+		{
+			if ( strpos( $form[$i], TMPL_FORM_PRE ) !== false)
+			{
+				$this->formUnit["form"]["formname"] = $form[$i];
+				$this->formUnit["form"]["split"] = ( explode( "_", $form[$i] ) );
+				continue;
+			}
+			if ( strpos( $form[$i], BUTTON_PRE ) !== false)
+			{
+				continue;
+			}
+			if ( strpos( $form[$i], FORM_SCRIPT_PRE ) !== false )
+			{
+				$this->formUnit['form']["script"] =  $form[$i];
+				continue;
+			}
+				$this->formUnit["formunit"][$j]["fieldname"] = $form[$i];
+				$this->formUnit["formunit"][$j]["split"] = ( explode( "_", $form[$i] ) );
+				$this->formUnit["unitcount"] = $this->formUnit["unitcount"] + 1;
+				$j = $j + 1;
+		}
+	}
+	function buildScript(  )
+	{
+		$formarr = $this->formUnit;
+
+		$script_str = "";
+		if ( $formarr["unitcount"] === 0 )
+			return NULL;
+		$script_str = $script_str . "\n<script language=\"javascript\">\n"; 
+		$script_str = $script_str ."<!--\n"; 
+
+		$script_str = $script_str ."function ".$formarr["form"]["script"]."(fm)\n{\n"; 
+		for ( $i = 0; $i < $formarr["unitcount"]; $i++ )
+		{
+			 $script_str =  $script_str . $this->getFieldScript( $formarr["formunit"][$i]["fieldname"],$formarr["formunit"][$i]["split"] );
+		}
+		$script_str = $script_str ."\tif (!frm_chk(fm))\n";//单引号时不换行notice
+		$script_str = $script_str ."\t\treturn false;\n";
+		
+		$script_str = $script_str ."\tfm.".FORM_NAME.".value = '".$formarr["form"]["formname"]."';\n"; 
+		$script_str = $script_str ."return true;\n"; 
+		$script_str = $script_str ."}\n//-->\n"; 
+		$script_str = $script_str ."</script>\n"; 
+		$this->scriptString = getWebCheckboxScript().$script_str;
+	}
+
+	function getFieldScript( $fieldname, $fieldarr  )
+	{
+		$script = "";
+		if ( $fieldarr[5] == 1 )
+		{
+			$script = $script . "\tif ( fm.".$fieldname.".value == '' )\n";
+			$script = $script . "\t{\n";
+			$script = $script . "\t\talert('请输入".$fieldarr[1]."');\n";
+			$script = $script . "\t\tfm.".$fieldname.".focus();\n";
+			//$script = $script . "\t\tfm.".$fieldname.".select();\n";
+			$script = $script . "\t\treturn false;\n\t}\n";
+			$script = $script . "\tif ( ( fm.".$fieldname.".value.length  < ".$fieldarr[3]
+								 ." )||( fm.".$fieldname.".value.length >".$fieldarr[4]." ) )\n";
+			$script = $script . "\t{\n";
+			$script = $script . "\t\talert('".$fieldarr[1]."长度必须为".$fieldarr[3]."-".$fieldarr[4]."之间!');\n";
+			$script = $script . "\t\tfm.".$fieldname.".focus();\n";
+			$script = $script . "\t\tfm.".$fieldname.".select();\n";
+			$script = $script . "\t\treturn false;\n\t}\n";
+			if ( isset( $this->checkScriptTypeArray[$fieldarr[2]] ) )//如果检查表达式已经定义，则进行检查
+			{
+				if ( $this->checkScriptTypeArray[$fieldarr[2]] === TEXTBOXEN )
+					$reg_script = str_replace( PHP_CH_REG, JS_CH_REG, $this->checkScriptTypeArray[$fieldarr[2]] );
+				else
+					$reg_script = $this->checkScriptTypeArray[$fieldarr[2]];
+				$script = $script . "\tvar myReg =".$reg_script.";\n";
+				$script = $script . "\tvar myStr = fm.".$fieldname.".value;\n";
+				$script = $script . "\tif ( myReg.test( myStr ) != true )\n\t{\n";
+				$script = $script . "\t\talert('".$fieldarr[1]."含有非法字符请检查，请检查!');\n";
+				$script = $script . "\t\tfm.".$fieldname.".focus();\n";
+				$script = $script . "\t\tfm.".$fieldname.".select();\n";
+				$script = $script . "\t\treturn false;\n";
+				$script = $script . "\t}\n";
+			}
+		}
+		return $script;
+	}
+}
+?>

@@ -1,0 +1,102 @@
+<html>
+<head>
+ <title>系统管理员-用户管理</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="__CSSFILEPATH__" type="text/css">
+<script language=javascript>
+function chk_box2(theBox,i,txt,j,flag)
+{
+	var tmp1 = theBox.name.substr( 0, theBox.name.length - 2 )+'1';
+	var tmp4 = theBox.name.substr( 0, theBox.name.length - 2 );
+	var tmp2 = theBox.form[tmp1+'[]'];
+	var tmp3 = '';
+if ( flag )
+{
+	var value = theBox.form[ 'customInfluenceItemList1[]' ](i).value;
+	var value1 = '';
+	if ( theBox.checked )
+	{
+	
+		if ( typeof( tmp2.value ) == "undefined" )
+		{
+			tmp2(j).value =1;
+			tmp3 = txt+':'+tmp4+'='+tmp2(j).value;
+		}
+		else
+		{
+			tmp2.value = 1;
+			tmp3 = txt+':'+tmp4+'='+tmp2.value
+		}
+		value1 = value.replace( tmp4+'=0', tmp4+'=1' );
+	}
+	else
+	{
+		if ( typeof( tmp2.value ) == "undefined" )
+		{
+			tmp2(j).value =0;
+			tmp3 = txt+':'+tmp4+'='+tmp2(j).value
+		}
+		else
+		{
+			tmp2.value = 0;
+			tmp3 = txt+':'+tmp4+'='+tmp2.value
+		}
+		value1 = value.replace( tmp4+'=1', tmp4+'=0' );
+	}
+	theBox.form[ 'customInfluenceItemList1[]' ](i).value = value1;
+	alert( theBox.form[ 'customInfluenceItemList1[]' ](i).value );
+}
+else
+{
+	var tmp1 = theBox.name.substr( 0, theBox.name.length - 2 )+'1';
+	var tmp2 = theBox.form[tmp1+'[]'];
+
+	if ( theBox.checked )
+		tmp2[i].value = 1;
+	else
+		tmp2[i].value = 0;
+	}
+}
+</script>
+
+</head>
+<body>
+<form name="form_1_webadmin.influence_1" action ="__FORMACTION__" onsubmit="return script_juge(this);" method="post">
+<table cellSpacing=0 cellpadding=0 width="95%" align=center border=0>
+  <tbody>
+    <tr bgColor=#ffffff> 
+      <td bgColor=#eaf1fb><br>
+        <br> 
+          <p align=left><span class=text3>权限分配</span> 
+				<input type=hidden name="influenceID" value="__INFLUENCEID__">
+                      自定义权限可以定义的项:定义后的效果如：showtmpl.php?flag=1&menuID=1&opt=updUser<br>	
+'popUp'=>"javascript:window.open('__URL__','','toolbar=no,resizable=yes,scrollbars=yes,menubar=no');<br><br>
+'location'=>"javascript:location.href='__URL__';"<br><br>
+'delSele'=>"javascript: if (checkchose())   { if (confirm('所选内容将被删除，确认要删除吗？')) this.form.formname.value=this.form.name;this.form.submit();}"<br><br>
+'mulSele'=>"javascript:if (checkchose()){ this.form.submit();}"<br><br>
+'singleSele'=>"javascript:if (chk_box_status()) {location.href='__URL__&id='+get_chk_box_value();}"<br><br>
+'null'=>''<br><br>
+例如:授权:style=delSele:giveOpt=1<br><br>
+        </p>
+          <p align=left><span class=text3><b>角色名称:&nbsp;&nbsp;</b>__INFLUENCENAME__</span> 
+          </p>
+          <p align=left><span class=text3> 
+					__USERPOWER__</span>
+          </p>
+          <p align=center>
+            <input type="submit" name="button_submit" value="保 存" ONMOUSEOVER="this.style.background='#ECFBFF'" 
+                        STYLE="BORDER-RIGHT: black 1px solid; BORDER-TOp: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-BOTTOM: black 1px solid; BACKGROUND-COLOR: #f9f9f9" 
+                        ONMOUSEOUT="this.style.background='#F9F9F9'">
+            <input type="button" name="button_submit1" value="关 闭" onclick="javascript:history.back();" ONMOUSEOVER="this.style.background='#ECFBFF'" 
+                        STYLE="BORDER-RIGHT: black 1px solid; BORDER-TOp: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-BOTTOM: black 1px solid; BACKGROUND-COLOR: #f9f9f9" 
+                        ONMOUSEOUT="this.style.background='#F9F9F9'">
+          </p>
+        <br>
+		</td>
+    </tr>
+
+  </tbody>
+</table>
+</form>
+</body>
+</html>

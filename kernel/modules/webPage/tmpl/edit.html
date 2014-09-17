@@ -1,0 +1,42 @@
+<html>
+<head>
+ <title>系统管理员-用户管理</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="__CSSFILEPATH__" type="text/css">
+</head>
+__JAVASCRIPT__
+<body>
+<form name="form_2_systemuser_1" action ="__FORMACTION__" onsubmit="return script_juge(this);" method="post">
+<div id="mainbox">
+	<div id="userinfobox">
+		<div id="userinfoinbox">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+  <td height="30" class="blueb14">用户编辑</td>
+</tr>
+</table>
+<table>
+<tr><td>用户角色:</td><td>
+					__INFLUENCE__</td></tr>
+<tr><td>用户邮箱:</td><td>__LOGINAME__</td></tr>
+<tr><td>姓名:</td><td><input name="userName_姓名_textboxen_3_50_1_1" type="text" size="12" value="__USERNAME__"> </td></tr>
+<tr><td>性别:</td><td>男<input name="sex_性别_integer_1_1_0_1" type="radio"  size="5"  maxlength=4 value="0" __0CHECKED__>女<input name="sex_性别_integer_1_1_0_1" type="radio" size="5"  maxlength=4 value="1" __1CHECKED__></td></tr>
+<tr><td>所属城市:</td><td>__CITYID__</td></tr>
+<tr><td>生日:</td><td><input name="birthday_生日_integer_8_8_1_1" type="text" size="10"  maxlength="10" value="__BIRTHDAY__"> </td></tr>
+<tr><td>地址:</td><td><input name="address_所在地址_textboxen_2_40_1_1" type="text" size="40" maxlength="40" value="__ADDRESS__"></td></tr>
+<tr><td>qq:</td><td><input name="qq_联系电话_phone_7_15_1_1" type="text" size="11" value="__QQ__">如(414301929)</td></tr>
+<tr><td>msn:</td><td><input name="msn_msn_email_5_40_1_1" type="text" size="12" value="__MSN__"></td></tr>
+<tr><td>手机:</td><td><input name="mobile_手机_mobile_11_11_1_1" type="text" size="12" value="__MOBILE__"></td></tr>
+<tr><td>个人主页:</td><td><input name="homepage_个人主页_textboxen_4_40_1_1" type="text" size="12" value="__HOMEPAGE__"></td></tr>
+<tr><td>公司:</td><td><input name="company_公司_textboxen_1_30_1_1" type="text" size="12" value="__COMPANY__"></td></tr>
+<tr><td>职业:</td><td>__PROFESSIONID__</td></tr>
+<tr><td>简介:</td><td><textarea name="note_个人简介_textarea_1_500_1_1" rows=10 cols=45>__NOTE__</textarea></td></tr>
+<tr><td colspan=2><input type="submit" name="button_submit" value="保 存"><input type="button" name="button_submit1" value="关 闭" onclick="javascript:history.back();"></td></tr>
+</table>
+		</div>
+	</div>
+</div>
+</form>
+
+</body>
+</html>

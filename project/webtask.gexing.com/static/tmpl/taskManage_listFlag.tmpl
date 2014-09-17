@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>用户表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="/cssimg/style.css" type="text/css">
+</head>
+__JAVASCRIPT__
+<body>
+
+<table width="95%" align="center" border="0" cellpadding="0" cellspacing="0" bgcolor="#fAfAfA" id="commtable">
+    <tr bgcolor="#efefef" class="tablett">
+        <td >&nbsp;</td>
+        <td height=30 align="center">指令sn</td>
+        <td align="center">指令键</td>
+        <td align="center">类型</td>
+        <td align="center">命令参数</td>
+        <td align="center">命令字符串</td>
+        <td align="center">发送时间</td>
+        <td align="center">完成时间</td>
+        <td align="center">发送状态</td>
+        <td align="center">运行状态</td>
+    
+    </tr>
+
+<form action="__FORMACTION__" name="form_3_webtask.cmd" method="post" onsubmit="return script_juge(this);">
+    <!--mapdata-->
+    <tr>
+
+        <td align="center"><input type="checkbox" name="id_编号_integer_1_10_0_1[]" value="__ID__"></td>
+        <td height=30 align="center">__CMDSN__</td>
+        <td align="center">__CMDKEY__</td>
+        <td align="center">__CMDTYPE__</td>
+        <td align="center">__CMDPARA__</td>
+        <td align="center">__CMDSTR__</td>
+        <td height=30 align="center">__SENDTIME__</td>
+        <td align="center">__COMPLETETIME__</td>
+        <td align="center">__SENDSTATUS__</td>
+        <td align="center">__RUNSTATUS__</td>
+    </tr>
+    <!--mapdata-->
+<tr>
+        <td colspan="5" height=30>__BUTTOMSTR__</td>
+    </tr>
+</form>
+
+</table>
+</body>
+</html>

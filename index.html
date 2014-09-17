@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>sina cloud</title>
+    <link href="/cssimg/common.css" rel="stylesheet" type="text/css"/>
+    <link href="./cssimg/home.css" rel="stylesheet" type="text/css"/>
+    <style>
+        form {
+            margin: 0;
+        }
+
+        textarea {
+            display: block;
+        }
+    </style>
+    <script charset="utf-8" src="./openSrc/editor/lang/zh_CN.js"></script>
+    <script charset="utf-8" src="./openSrc/jquery/date/jquery-1.3.2.js"></script>
+
+    <script language="javascript">
+        <!--
+        function checkForm(fm) {
+            if (fm.uid.value == '') {
+                alert('请输入用户名!');
+                fm.uid.focus();
+                return false;
+            }
+            var uidRegex = /[a-zA-Z0-9_\-]{4,16}/;
+            if (uidRegex.test(fm.uid.value) != true) {
+                alert('请检查用户名输入是否正确(长度必须是4-16)!');
+                //fm.uid.focus();
+                fm.uid.select();
+                return false;
+            }
+            if (fm.password.value == '') {
+                alert('请输入登录密码!');
+                fm.password.focus();
+                return false;
+            }
+            var pwdRegex = /[a-zA-Z0-9_\-]{4,16}/;
+            if (pwdRegex.test(fm.password.value) != true) {
+                alert('请检查密码输入是否正确(长度必须是4-16)!');
+                //fm.uid.focus();
+                fm.uid.select();
+                return false;
+            }
+
+            return true;
+
+        }
+        //-->
+    </script>
+</head>
+<body>
+
+<div id="wrapper">
+    <div id="home-content">
+
+        <form name="form_0_systemuser" action="login.php" onsubmit="return checkForm(this);" method="post">
+            <div>
+                <div id="homes-login">
+                    <table align="center" cellpadding="0" cellspacing="0" border="0" width="500" style="font-size: 12px;">
+                        <tr>
+                            <td align="right" height="30"></td>
+                            <td align="left"><h2>后台用户登录</h2></td>
+                        </tr>
+                        <tr>
+                            <td align="right" height="30"><b>用户名：</b></td>
+                            <td align="left"><input type="text" name="uid" size="33" value="quanjun@staff.sina.com.cn" onfocus="if (this.value=='输入注册邮箱') this.value='';"
+                                                    onblur="if (this.value=='') this.value='输入注册邮箱';"/></td>
+                        </tr>
+                        <tr>
+                            <td align="right" height="30"><b>密码：</b></td>
+                            <td align="left"><input type="password" name="password" value="asdfasdf" size="33"/></td>
+                        </tr>
+                        <tr>
+                            <td align="right" height="30"><b>验证码：</b></td>
+                            <td align="left">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td width="70"><input name="chkCode" type="text" size="5"/></td>
+                                        <td align="left"><img src="./kernel/modules/checkCode/madeImg.php" width="65" height="25"/></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right" height="30"></td>
+                            <td align="left"><input type="checkbox" name="loginStatus"/>记住登录状态</td>
+                        </tr>
+                        <tr>
+                            <td align="right" height="30"></td>
+                            <td align="left"><input class="btn" type="submit" value="登录"/></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

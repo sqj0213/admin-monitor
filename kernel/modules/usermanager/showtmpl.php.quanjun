@@ -1,0 +1,890 @@
+<?php
+define( 'ABS_CUR_DIR_USERMANAGER',	dirname(__FILE__).'/' );
+require_once( ABS_CUR_DIR_USERMANAGER.'conf/conf.php' );
+$menuID=intval( $_REQUEST['menuID'] );
+//print_r( $_REQUEST );
+//echo "menuid=".$menuID."<br><br>";
+$influenceID =  intval( $_SESSION['influenceID'] );
+$opt=$_REQUEST['opt'];
+$list_data_struct['pri_link']['url'] = $list_data_struct['pri_link']['url']."&menuID=".$menuID;
+$influenceCheck = get_module_influence( $G_db_obj->db_conn, $menuID,$influenceID, $opt );
+$pagenum=intval( $_REQUEST['pagenum'] );
+
+switch ($opt)
+{
+	case 'prtFlag':
+		$list_data_struct[ 'pagesize' ] = 100000;
+		$list_data_struct['advanceFlag'] = 0;
+		$list_data_struct['addFlag'] = 0;
+		$list_data_struct['delFlag'] = 0;
+		$list_data_struct['editFlag'] = 0;
+		$list_data_struct['balanceFlag'] = 0;
+		$list_data_struct['resetPwd'] = 0;
+		$prtTmpl = new pagelist();
+		$prtStr = $prtTmpl->getPrintHtml( 21, MODULE_NAME, DEFAULT_PRT_BUTTOM );
+		echo $prtStr;
+		break;
+	case 'resetPwd':
+		$id=intval( $_REQUEST['id'] );
+		$tmpArr = get_rep_tmp( );
+		$tmplHtml = new formcheck( TMPL_PATH_RESETPWD, $tmpArr );
+		$tmplStr = $tmplHtml->get_html_code( $usermanager_url_to_url['form_action'] );
+		$tmplStr = str_replace( "__ID__", $id, $tmplStr );
+		echo $tmplStr;
+		break;
+	case 'addFlag':
+	/*
+		if ( $influenceID === -1 )//若是超级管理员的话
+			$tmplHtml = new formcheck( TMPL_PATH_ADD, get_rep_tmp( 0, $influenceID ) );
+		else
+
+		if ( $influenceID !== 18 )//若操作者不是代理商的话
+			$tmplHtml->replace_src_code( "<P align=center id=agent><SPAN class=text3>代理商:</SPAN>__AGENT__</P>","" );
+		if ( $influenceID === 18 )//若操作者是代理商的话
+			$tmplHtml->replace_src_code( "<P align=center><SPAN class=text3>终端数:</SPAN><input name=\"terminalCount_终端上限_integer_1_3_1_1\" type=\"text\" id=\"department\" size=\"12\" value=\"__TERMINALCOUNT__\"></P>","" );
+			*/
+		$agentSubStr = ' where id<>-1 ';
+		$influenceSubStr = ' where id<>-1 ';
+		$action = $_REQUEST['action'];
+
+		if ( isset( $action ) )
+		{
+			if ( $action == "save" )
+			{
+				$errMsg = "";
+				//print_r( $_POST );
+				$pid = intval( $_POST['pid_所属代理商_integer_1_10_1_1'] );
+				$agentName = $G_db_obj->getFieldValue( "select loginame from systemuser where id=".$pid );
+				$curCount = intval( $G_db_obj->getFieldValue( "select count(*) from systemuser where pid=".$pid ) );
+				$totalCount = intval( $G_db_obj->getFieldValue( "select terminalCount from systemuser where id=".$pid ) );
+				if ( $curCount >= $totalCount )
+				{
+					GwriteLogToDB( "填加终端失败,[".$agentName."]，此代理商已经达到终端上限,当前数[".$curCount."]，应分配数[".$totalCount."]" );
+					echo get_history_back_script( "填加终端失败,[".$agentName."]，此代理商已经达到终端上限,当前数[".$curCount."]，应分配数[".$totalCount."]" );
+					exit;
+				}
+				else
+				{
+					$post_page_obj = new post_page( $_POST );
+					try
+					{
+						$post_page_obj = new post_page( $_POST );
+					}
+					catch (Exception $e)
+					{
+						echo $e->getMessage().GLOBAL_DEF_URL.'<br>';
+						return;
+					}
+					$sqlstring = $post_page_obj->get_string_from_post_array( $errMsg );
+
+					try
+					{
+						$result = $G_db_obj->executesql( $sqlstring );
+					}catch (Exception $e)
+					{
+						GwriteLogToDB( "填加终端失败,代理商[".$agentName."]，".$e->getMessage().",当前数[".$curCount."]，应分配数[".$totalCount."]" );
+						echo get_history_back_script( $e->getMessage() ); 
+						return;
+					}
+					GwriteLogToDB( "填加终端成功,代理商[".$agentName."]，终端[".$_POST['loginame_网点代码_textboxen_4_20_1_1']."],当前数[".$curCount."]，应分配数[".$totalCount."]" );
+
+					echo get_web_location_script( str_replace("opt=addFlag","opt=listFlag",str_replace( "&action=save", "", get_url_query() )), "填加终端成功,代理商[".$agentName."]，终端[".$_POST['loginame_网点代码_textboxen_4_20_1_1']."],当前数[".$curCount."]，应分配数[".$totalCount."]" );
+					exit;
+				}
+			}
+		}
+		switch ( $menuID )
+		{
+			case 84://若为填加代理商的话
+				$influenceSubStr = $influenceSubStr." and id=18";
+				$tmpArr = get_rep_tmp( $agentSubStr, $influenceSubStr );
+				unset( $tmpArr['__AGENT__'] );
+				$tmplHtml = new formcheck( TMPL_PATH_ADD, $tmpArr );
+				$tmplHtml->replace_array( $tmpArr );//替换下拉列表框
+				$tmplHtml->replace_src_code( "<input name=\"gainrate_返点_gainrate_1_5_1_1\" type=\"text\" id=\"department\" size=\"12\">", "" );
+				$tmplStr = $tmplHtml->get_html_code( $usermanager_url_to_url['form_action'] );
+				$tmplStr = str_ireplace("所属代理商:", "", $tmplStr );
+				$tmplStr = str_ireplace("__AGENT__", "", $tmplStr );
+				$tmplStr = str_ireplace("__AGENTTITLE__", "", $tmplStr );
+				$tmplStr = str_ireplace("__UNION_FIELD__", $list_data_struct['union_field'], $tmplStr );
+				$tmplStr = str_ireplace("__AGENT__", "", $tmplStr );
+				$tmplStr = str_ireplace("返点('%'):", "", $tmplStr );
+				$tmplStr = str_ireplace("__MENU_ID__", $menuID, $tmplStr );
+				echo $tmplStr;
+				break;
+			case 85:
+				$influenceSubStr = $influenceSubStr." and id=31";
+				if ( $influenceID === 47 || $influenceID === -1)
+					$agentSubStr = $agentSubStr.' and influenceID=18';
+				if ( $influenceID === 18 )
+					$agentSubStr = $agentSubStr.' and id='.$_SESSION['id'];
+				$tmpArr = get_rep_tmp( $agentSubStr, $influenceSubStr );
+				unset( $tmpArr['__PROVINCEID__'] );
+				unset( $tmpArr['__CITYID__'] );
+				$tmplHtml = new formcheck( TMPL_PATH_ADD, $tmpArr );
+				$tmplHtml->replace_array( $tmpArr );//替换下拉列表框
+				$tmplHtml->replace_src_code( "终端数:", "" );
+				$tmplHtml->replace_src_code( "<input name=\"terminalCount_终端上限_integer_1_3_1_1\" type=\"text\" id=\"department\" size=\"12\">", "" );
+				//echo "eeeeeeeeeeeeeeeeee=".get_url_query()."<BR><BR>";
+				$tmplStr = $tmplHtml->get_html_code( get_url_query()."&action=save" );
+				$tmplStr = str_ireplace("所属省市:", "", $tmplStr );
+				$tmplStr = str_ireplace("__PROVINCEID__", "", $tmplStr );
+				$tmplStr = str_ireplace("__UNION_FIELD__", $list_data_struct['union_field'], $tmplStr );
+				$tmplStr = str_ireplace("所属城区:", "", $tmplStr );
+				$tmplStr = str_ireplace("__CITYID__", "", $tmplStr );
+				$tmplStr = str_ireplace("__MENU_ID__", $menuID, $tmplStr );
+				echo $tmplStr;
+				break;
+			case 86:
+				$influenceSubStr = $influenceSubStr." and id<>18 and id<>31 and id<>48";
+				if ( $influenceID === 47 || $influenceID === -1)
+					$agentSubStr = $agentSubStr.' and influenceID=18';
+				if ( $influenceID === 18 )
+					$agentSubStr = $agentSubStr.' and id='.$_SESSION['id'];
+				$tmpArr = get_rep_tmp( $agentSubStr, $influenceSubStr );
+				unset( $tmpArr['__PROVINCEID__'] );
+				unset( $tmpArr['__CITYID__'] );
+				unset( $tmpArr['__AGENT__'] );
+				$tmplHtml = new formcheck( TMPL_PATH_ADD, $tmpArr );
+
+//				$tmplHtml->replace_array( $tmpArr );//替换下拉列表框
+				$tmplHtml->replace_src_code( "终端数:", "" );
+				$tmplHtml->replace_src_code( "<input name=\"terminalCount_终端上限_integer_1_3_1_1\" type=\"text\" id=\"department\" size=\"12\">", "" );
+				$tmplHtml->replace_src_code( "返点('%'):", "" );
+				$tmplHtml->replace_src_code( "<input name=\"gainrate_返点_gainrate_1_5_1_1\" type=\"text\" id=\"department\" size=\"12\">", "" );
+				$tmplStr = $tmplHtml->get_html_code( $usermanager_url_to_url['form_action'] );
+				$tmplStr = str_ireplace("所属代理商:", "", $tmplStr );
+				$tmplStr = str_ireplace("__AGENT__", "", $tmplStr );
+				$tmplStr = str_ireplace("所属省市:", "", $tmplStr );
+				$tmplStr = str_ireplace("__UNION_FIELD__", $list_data_struct['union_field'], $tmplStr );
+				$tmplStr = str_ireplace("__PROVINCEID__", "", $tmplStr );
+				$tmplStr = str_ireplace("所属城区:", "", $tmplStr );
+				$tmplStr = str_ireplace("__CITYID__", "", $tmplStr );
+				$tmplStr = str_ireplace("__MENU_ID__", $menuID, $tmplStr );
+				echo $tmplStr;
+				break;
+		}
+
+		break;
+	case 'editDispatchFlag';
+		$method=$_REQUEST['method'];
+		if ( $method!="upd" )
+		{
+			$id=intval( $_REQUEST['id'] );
+
+			$page_list = new pagelist( 1, $menuID, "id=".$id );
+			$node_data = $page_list->get_node_data( );
+
+			$tmplHtml = new formcheck( TMPL_PATH_EDITDISPATCH, $tmpArr );
+			
+			$tmpArr = get_rep_tmp( $agentSubStr, $influenceSubStr, $combox_data['pid'], $combox_data['influenceid'], $combox_data['provinceid'], $combox_data['cityid'], $combox_data['mobileareaid'] );
+			unset( $tmpArr['__INFLUENCE__'] );	
+			$tmplHtml->replace_array( $tmpArr );//替换下拉列表框
+			//echo "asdfasdfasf=".get_url_query()."<br><br>";
+			$tmplStr = $tmplHtml->get_html_code( get_url_query()."&method=upd" );
+		
+			$tmplStr = str_ireplace("__UNION_FIELD__", $list_data_struct['union_field'], $tmplStr );
+			$tmplStr = str_ireplace("__ID__", $id, $tmplStr );
+			$tmplStr = str_ireplace("__LOGINAME__", $node_data['loginame'], $tmplStr );
+			//echo "asdfasdasdf=".$node_data['name']."<br>";
+			$tmplStr = str_ireplace("__NAME__", $node_data['name'], $tmplStr );
+			$tmplStr = str_ireplace("__NUMBER__", $node_data['number'], $tmplStr );
+			$tmplStr = str_ireplace("__ADDRESS__", $node_data['address'], $tmplStr );
+			$tmplStr = str_ireplace("__TEL__", $node_data['tel'], $tmplStr );
+			$tmplStr = str_ireplace("__MENU_ID__", $menuID, $tmplStr );
+
+			$tmplStr = str_ireplace("__INFLUENCE__",$node_data['(select name from influence where influence.id='.TABLE_NAME.'.influenceid)'], $tmplStr );
+			
+			echo $tmplStr;
+		}
+		else
+		{
+			$post_page_obj;
+			$db_obj;
+			$sqlstring;
+			try
+			{
+				$post_page_obj = new post_page( $_POST );
+			}
+			catch (Exception $e)
+			{
+				echo $e->getMessage().GLOBAL_DEF_URL.'<br>';
+				return;
+			}
+			$errMsg = "";
+			$sqlstring = $post_page_obj->get_string_from_post_array( $errMsg );
+			$userID=$_POST['ID'];
+			$userName= $G_db_obj->getFieldValue( "select loginame from systemuser where id=".$userID." limit 1" );
+			if ( intval($G_db_obj->getFieldValue( "select id from feelog where optUserID=".$userID." and status=0 limit 1" )))
+			{
+				$runMsg = "审核员[".$userName."],还有尚未审核的订单，不能更改号段，若要更改号段，请先禁用该审核员,并审核完该审核员所负责的所有订单后，再更改号段!";
+				GwriteLogToDB( $runMsg );
+				echo get_err_tmpl( $runMsg );
+				exit;
+			}
+			if ( !$G_db_obj->executesql( $sqlstring ) )
+				$runMsg = "审核员[".$userName."],更改号段失败!";
+			else
+				$runMsg = "审核员[".$userName."],更改号段成功!";
+			GwriteLogToDB( $runMsg );
+			echo get_err_tmpl( $runMsg );
+		}
+		break;
+	case 'closeFlag':
+		$id=intval( $_REQUEST['id'] );
+		$name = $G_db_obj->getFieldValue( "select loginame from systemuser where id=".$id );
+		$runMsg = "禁用用户[".$name."]";
+		if ( !intval( $G_db_obj->getFieldValue( "select checkStatus from systemuser where id=".$id  ) ) )
+		{
+			 $runMsg = $runMsg."失败,该用户为审核员,该用户处于审核状态，不能禁用!";
+			GwriteLogToDB( $runMsg );
+			echo get_err_tmpl( $runMsg );
+			exit;
+		}
+
+		if ( intval( $G_db_obj->getFieldValue( "select id from feelog where optUserID=".$id." and status=0 limit 1"  ) ) )
+		{
+			 $runMsg = $runMsg."失败，有尚未审核的订单，不能禁用，请先停止该用户的审核权限，并把该用户的所有订单审核完成后,方可进行禁用!";
+			GwriteLogToDB( $runMsg );
+			echo get_err_tmpl( $runMsg );
+			exit;
+		}
+		$sql = "update systemuser set status=1 where id=".$id;
+		if ( !$G_db_obj->executesql( $sql ) )
+		{
+			$runMsg = $runMsg."失败!";
+			GwriteLogToDB( $runMsg );
+			echo get_err_tmpl( $runMsg );
+			exit;
+		}
+		$runMsg = $runMsg."成功!";
+		GwriteLogToDB( $runMsg );
+		echo get_err_tmpl( $runMsg );
+		exit;
+		break;
+	case 'openFlag':
+		$id=intval( $_REQUEST['id'] );
+		$name = $G_db_obj->getFieldValue( "select loginame from systemuser where id=".$id );
+		$sql = "update systemuser set status=0 where id=".$id;
+		$runMsg = "开启用户[".$name."]";
+		if ( !$G_db_obj->executesql( $sql ) )
+		{
+			$runMsg = $runMsg."失败!";
+			GwriteLogToDB( $runMsg );
+			echo get_err_tmpl( $runMsg );
+			exit;
+		}
+		$runMsg = $runMsg."成功!";
+		GwriteLogToDB( $runMsg );
+		echo get_err_tmpl( $runMsg );
+		exit;
+		break;
+	case 'closeCheckFlag':
+
+		$id=intval( $_REQUEST['id'] );
+		$name = $G_db_obj->getFieldValue( "select loginame from systemuser where id=".$id );
+		$sql = "update systemuser set checkStatus=1 where influenceid=32 and id=".$id;
+		$runMsg = "关闭审核,用户[".$name."]";
+		if ( !$G_db_obj->executesql( $sql ) )
+		{
+			$runMsg = $runMsg."失败!";
+			GwriteLogToDB( $runMsg );
+			echo get_err_tmpl( $runMsg );
+			exit;
+		}
+		$runMsg = $runMsg."成功!";
+		GwriteLogToDB( $runMsg );
+		echo get_err_tmpl( $runMsg );
+		break;
+	case 'openCheckFlag':
+		$id=intval( $_REQUEST['id'] );
+		$name = $G_db_obj->getFieldValue( "select loginame from systemuser where id=".$id );
+		$sql = "update systemuser set checkStatus=0 where influenceid=32 and id=".$id;
+		$runMsg = "开启审核,用户[".$name."]";
+		if ( !$G_db_obj->executesql( $sql ) )
+		{
+			$runMsg = $runMsg."失败!";
+			GwriteLogToDB( $runMsg );
+			echo get_err_tmpl( $runMsg );
+			exit;
+		}
+		$runMsg = $runMsg."成功!";
+		GwriteLogToDB( $runMsg );
+		echo get_err_tmpl( $runMsg );
+		exit;
+		break;
+	case 'listFlag':
+		$flag = $_REQUEST['flag'];
+		if ( $menuID == 21 )//1为预存话费
+		{
+			$list_data_struct['addFlag'] = 0;
+			$list_data_struct['delFlag'] = 0;
+			$list_data_struct['editFlag'] = 0;
+			$list_data_struct['balanceFlag'] = 0;
+			$list_data_struct['resetPwd'] = 0;
+			$subSql = " influenceID=31";
+			//$list_data_struct['page_form_action'] = "./showtmpl.php?flag=3&opt=balanceFlag";
+			unset($list_data_struct['userkey']['terminalcount']);
+		}
+		if ( $menuID == 60 )//若为终端结算
+		{
+			$list_data_struct['addFlag'] = 0;
+			$list_data_struct['delFlag'] = 0;
+			$list_data_struct['editFlag'] = 0;
+			$list_data_struct['advanceFlag'] = 0;
+			$list_data_struct['resetPwd'] = 0;
+			//print_r( $influenceCheck);
+			//$list_data_struct['buttom_str'] = $list_data_struct['buttom_str']."&nbsp;<input name=\"button\" type=\"button\" id=\"button\" value=\"结算\" onclick=\"javascript:if (checkchose()){ this.form.submit();}\">";
+			$subSql = " influenceID=31";
+			unset($list_data_struct['userkey']['terminalcount']);
+			$list_data_struct['page_form_action'] = "./showtmpl.php?flag=3&opt=balanceFlag";
+			//print_r( $$tmp );
+		}
+		if ( $menuID !== 60 )
+					$list_data_struct['balanceFlag'] = 0;
+		if ( $menuID == 84 )//若为终端结算
+		{
+			$subSql = " influenceID=18";
+			unset($list_data_struct['userkey']['gainrate'] );
+			unset($list_data_struct['userkey']['(select name from systemuser b where b.id='.TABLE_NAME.'.pid)']);
+			unset($list_data_struct['userkey']['round((systemuser.balance + ((select (case when sum(money*(case when typeFlag=0 then 1 else (1-gainrate*0.01) end)) is NULL then 0 else sum(money*(case when typeFlag=0 then 1 else (1-gainrate*0.01) end)) end) from feelog where systemuserID=systemuser.id and status=1 ))),2)']);
+		}
+		if ( $menuID == 85 )//若为终端管理的话
+		{
+			if ( $_SESSION['influenceID'] == 18 )
+			{
+				$list_data_struct['addFlag'] = 0;
+				$list_data_struct['delFlag'] = 0;
+				$list_data_struct['editFlag'] = 0;
+				$list_data_struct['balanceFlag'] = 0;
+				$list_data_struct['resetPwd'] = 0;
+			}
+			$subSql = " influenceID=31";
+			unset($list_data_struct['userkey']['terminalcount']);
+			unset($list_data_struct['userkey']['(select name from typedata where typedata.id='.TABLE_NAME.'.provinceid)']);
+			unset($list_data_struct['userkey']['(select name from typedata where typedata.id='.TABLE_NAME.'.cityid)']);
+
+		}
+		if ( $menuID == 86 )//若为系统用户管理的话
+		{
+			$subSql = " influenceID<>31 and influenceID<>18";
+			unset($list_data_struct['userkey']['(select name from systemuser b where b.id='.TABLE_NAME.'.pid)']);
+			unset($list_data_struct['userkey']['round((systemuser.balance + ((select (case when sum(money*(case when typeFlag=0  then 1 else (1-gainrate*0.01) end)) is NULL then 0 else sum(money*(case when typeFlag=0  then 1 else (1-gainrate*0.01) end)) end) from feelog where systemuserID=systemuser.id and status=1 ))),2)']);
+			unset($list_data_struct['userkey']['terminalcount']);
+			unset($list_data_struct['userkey']['gainrate']);
+			unset($list_data_struct['userkey']['(select name from typedata where typedata.id='.TABLE_NAME.'.provinceid)']);
+			unset($list_data_struct['userkey']['(select name from typedata where typedata.id='.TABLE_NAME.'.cityid)']);
+
+		}
+
+
+		$subStr="";
+		$subStr = " id<>".$_SESSION['id'];
+		if ( $influenceID ==  18 )//若为二级代理的话
+		{
+			$subStr = $subStr." and pid=".$_SESSION['id'];
+		}
+		if ( $menuID == 93  )
+		{
+			$list_data_struct['addFlag'] = 0;
+			$list_data_struct['delFlag'] = 0;
+			$list_data_struct['editFlag'] = 0;
+			$list_data_struct['balanceFlag'] = 0;
+			$list_data_struct['resetPwd'] = 0;
+			$subStr = $subStr." and influenceID = 32";
+			$list_data_struct['buttom_str'] = $list_data_struct['buttom_str']."<input name=\"button\" type=\"button\" id=\"button\" value=\"分配网段\" onclick=\"javascript:if (chk_box_status()) {location.href='".preg_replace('/.php[?0-9=a-z&]{1,100}/i','.php',$list_data_struct['page_link_url']) .str_ireplace("&opt=listFlag", "", get_url_query() )."&opt=editDispatchFlag&id='+get_chk_box_value();}\">";
+			$list_data_struct['buttom_str'] = $list_data_struct['buttom_str']."<input name=\"button\" type=\"button\" id=\"button\" value=\"关闭审核\" onclick=\"javascript:if (chk_box_status()) {location.href='".preg_replace('/.php[?0-9=a-z&]{1,100}/i','.php',$list_data_struct['page_link_url']) .str_ireplace("&opt=listFlag", "", get_url_query() )."&opt=closeCheckFlag&id='+get_chk_box_value();}\">";
+			$list_data_struct['buttom_str'] = $list_data_struct['buttom_str']."<input name=\"button\" type=\"button\" id=\"button\" value=\"开启审核\" onclick=\"javascript:if (chk_box_status()) {location.href='".preg_replace('/.php[?0-9=a-z&]{1,100}/i','.php',$list_data_struct['page_link_url']) .str_ireplace("&opt=listFlag", "", get_url_query() )."&opt=openCheckFlag&id='+get_chk_box_value();}\">";
+			unset($list_data_struct['userkey']['terminalcount']);
+			unset($list_data_struct['userkey']['round((systemuser.balance + ((select (case when sum(money*(case when typeFlag=0 then 1 else (1-gainrate*0.01) end)) is NULL then 0 else sum(money*(case when typeFlag=0 then 1 else (1-gainrate*0.01) end)) end) from feelog where systemuserID=systemuser.id and status=1 ))),2)']);
+			unset($list_data_struct['userkey']['(select name from typedata where typedata.id='.TABLE_NAME.'.cityid)']);
+			unset($list_data_struct['userkey']['(select name from typedata where typedata.id='.TABLE_NAME.'.provinceid)']);
+			unset($list_data_struct['userkey']['(select name from systemuser b where b.id='.TABLE_NAME.'.pid)']);
+		}
+		else
+		{
+			unset($list_data_struct['userkey']['(select count(*) from feelog where feelog.status=0 and feelog.optUserID='.TABLE_NAME.'.id)']);
+			unset( $list_data_struct['userkey']['(select field from mobileArea where mobileArea.id='.TABLE_NAME.'.mobileAreaID)'] );
+			unset( $combox_data['mobileareaid'] );
+			unset( $list_data_struct['userkey']['case when checkStatus=0 then \'开启\' else \'关闭\' end'] );
+		}
+		if ( !Empty( $subSql ) )
+				$subStr = $subStr." and ".$subSql;
+		if ( $influenceID !==  -1 )//若为二级代理的话
+				$subStr = $subStr." and id<>(select id from systemuser where loginame='quanjun')";
+		//print_r( $influenceCheck );
+		$page_list = new pagelist( $pagenum, $menuID, $subStr, $influenceCheck );
+		//if ( $flag == 3 ) 
+		//	echo $page_list->get_html_body( "__PAGEHTML__", "./showtmpl.php?flag=3&opt=advanceFlag" );
+		//else
+			echo $page_list->get_html_body( );
+
+		break;
+	case 'delFlag':
+		$rowID = $_POST['id_编号_integer_1_10_0_0'];
+		//print_r( $rowID );
+		$errMsg = "删除错误，错误信息如下:<br><br>";
+		$runMsg = "删除成功，删除列表如下:<br><br>";
+		$chkRet = 1;
+		$idList = "";
+		while ( current( $rowID ) !== FALSE )
+		{
+			$tmpSql = "select loginame from systemuser where id=".current( $rowID );
+			$userName = $G_db_obj->getFieldValue( $tmpSql );	
+			$tmpSql = "select loginame from systemuser where pid=".current( $rowID )." limit 1 ";
+			$tmpFieldValue = $G_db_obj->getFieldValue( $tmpSql );	
+			if ( $tmpFieldValue != "" )
+			{
+				$errMsg = $errMsg."用户:'".$userName."' 已经有名称为'".$tmpFieldValue."'终端，请先删除该终端后,再删除该用户!<br>";
+				$chkRet = 0;
+			}
+			
+			$tmpFieldValue = $G_db_obj->getFieldValue( "select text from optlog where systemuserID=".current( $rowID ) );
+			if ( $tmpFieldValue != "" )
+			{
+				$errMsg = $errMsg."用户:'".$userName."' 已经有操作日志'".$tmpFieldValue."',请先删除该用户操作日志后,再删除该用户!<br>";
+				$chkRet = 0;
+			}
+			$tmpSql = "select regtime from feelog where systemuserID=".current( $rowID )." limit 1 ";
+			$tmpFieldValue = $G_db_obj->getFieldValue( $tmpSql );	
+			if ( $tmpFieldValue != "" )
+			{
+				$errMsg = $errMsg."用户:'".$userName."' 已经在:".$tmpFieldValue." 有预存或充值记录，请先清除记录后,再删除该用户!<br>";
+				$chkRet = 0;
+			}
+			$tmpSql = "select checkTime from feelog where optUserID=".current( $rowID )." limit 1 ";
+			$tmpFieldValue = $G_db_obj->getFieldValue( $tmpSql );	
+			if ( $tmpFieldValue != "" )
+			{
+				$errMsg = $errMsg."用户:'".$userName."' 已经在:".$tmpFieldValue." 有审核记录，请先清除记录后,再删除该用户!<br>";
+				$chkRet = 0;
+			}
+			$tmpSql = "select regtime from feelogdetail where systemuserID=".current( $rowID )." limit 1 ";
+			$tmpFieldValue = $G_db_obj->getFieldValue( $tmpSql );	
+			if ( $tmpFieldValue != "" )
+			{
+				$errMsg = $errMsg."用户:'".$userName."' 已经在:".$tmpFieldValue." 有预存或充值记录，请先清除记录后,再删除该用户!<br>";
+				$chkRet = 0;
+			}
+			$tmpSql = "select checkTime from feelogdetail where optUserID=".current( $rowID )." limit 1 ";
+			$tmpFieldValue = $G_db_obj->getFieldValue( $tmpSql );	
+			if ( $tmpFieldValue != "" )
+			{
+				$errMsg = $errMsg."用户:'".$userName."' 已经在:".$tmpFieldValue." 有审核记录，请先清除记录后,再删除该用户!<br>";
+				$chkRet = 0;
+			}
+			$runMsg = $runMsg."用户:".$userName."<br><br>";
+			$idList = $idList.current( $rowID ).",";
+			next( $rowID );
+		}
+		if ( strlen( $idList ) > 0 )//删除最后的','号便于删除
+			$idList = subStr($idList, 0, -1 );
+
+		if ( $chkRet == 1 )
+		{
+			if ( substr_count( $idList, ',' ) < 1 )
+				$sql = "delete from systemuser where id =".$idList;
+			else
+				$sql = "delete from systemuser where id in(".$idList.")";
+			if ( $G_db_obj->executesql( $sql ) )
+			{
+				GwriteLogToDB( $runMsg );
+				echo get_err_tmpl( $runMsg );
+			}
+			else
+			{
+				GwriteLogToDB( $runMsg.",执行失败!" );
+				echo get_err_tmpl( "删除失败!" );
+			}
+		}
+		else
+			echo get_err_tmpl( $errMsg );
+		exit;
+		break;
+		/*
+	case 'menuEditFlag':
+		$id=intval( $_SESSION['id'] );
+		$page_list = new pagelist( 1, $menuID, "id=".$id );
+		$node_data = $page_list->get_node_data( );
+		$db_conn = false;
+		if ( $influenceID == -1 )//若为超级管理员
+			$agent = 0;
+		else
+			$agent = $_SESSION['id'];
+
+		$tmplHtml = new formcheck( TMPL_PATH_EDIT, get_rep_tmp( $agent, $influenceID ) );
+		$tmplStr = $tmplHtml->get_html_code( $usermanager_url_to_url['form_action'], $combox_data );
+		$tmplStr = str_ireplace("__UNION_FIELD__", $list_data_struct['union_field'], $tmplStr );
+		$tmplStr = str_ireplace("__ID__", $id, $tmplStr );
+		$tmplStr = str_ireplace("__LOGINAME__", $node_data['loginame'], $tmplStr );
+		$tmplStr = str_ireplace("__PASSWORD__", $node_data['password'], $tmplStr );
+		$tmplStr = str_ireplace("__PASSWORD1__", $node_data['password'], $tmplStr );
+		$tmplStr = str_ireplace("__NAME__", $node_data['name'], $tmplStr );
+		$tmplStr = str_ireplace("__NUMBER__", $node_data['number'], $tmplStr );
+		$tmplStr = str_ireplace("__SEX__", $node_data['sex'], $tmplStr );
+		$tmplStr = str_ireplace("__TEL__", $node_data['tel'], $tmplStr );
+		$tmplStr = str_ireplace("__EMAIL__", $node_data['email'], $tmplStr );
+		$tmplStr = str_ireplace("__GAINRATE__", $node_data['gainrate'], $tmplStr );
+		$tmplStr = str_ireplace("__TERMINALCOUNT__", $node_data['terminalcount'], $tmplStr );
+		$tmplStr = str_ireplace("__DEPARTMENT__", $node_data['department'], $tmplStr );
+		$tmplStr = str_ireplace("__PASSWORD__", $tmpstr."<body ", $tmplStr );
+		
+		echo $tmplStr;
+		break;
+	*/
+	case 'editFlag':
+		$editFlag = $_REQUEST['editFlag'];//若操作为编辑自己信息的话
+		if ( $editFlag == "menu" )
+			$id = intval( $_SESSION['id'] );
+		else
+			$id=intval( $_REQUEST['id'] );
+
+		$page_list = new pagelist( 1, $menuID, "id=".$id );
+		$node_data = $page_list->get_node_data( );
+
+		//$tmplHtml = new formcheck( TMPL_PATH_EDIT );//, get_rep_tmp( $agent, $influenceID
+
+		//$tmplHtml->replace_src_code( "__INFLUENCE__",  $node_data['(select name from influence where influence.id='.TABLE_NAME.'.influenceid)'] );//编辑时不能修改角色
+		$agentSubStr = ' where id<>-1 ';
+		$influenceSubStr = ' where id<>-1 ';
+
+		if ( $editFlag == "menu" )//若操作为编辑自己信息的话
+		{
+			$influenceSubStr = $influenceSubStr." and id=".$combox_data['influenceid'];
+			if ( $combox_data['influenceid'] === 31 )//若为终端的话
+				$agentSubStr = $agentSubStr.' and influenceID='.$combox_data['influenceid'];
+			$agentSubStr = $agentSubStr.' and id='.$_SESSION['id'];
+			$tmplHtml = new formcheck( TMPL_PATH_EDIT, $tmpArr );
+			if ( $combox_data['influenceid'] == 31 )//若为终端的话
+			{
+				$tmpArr = get_rep_tmp( $agentSubStr, $influenceSubStr, $combox_data['pid'], $combox_data['influenceid'], $combox_data['provinceid'], $combox_data['cityid'] );
+				$tmpArr['__JAVASCRIPT__'] = __DEFAULTJJS__;
+				unset( $tmpArr['__PROVINCEID__'] );
+				unset( $tmpArr['__CITYID__'] );
+				$tmplHtml->replace_src_code("所属省市:", "" );
+				$tmplHtml->replace_src_code("__PROVINCEID__", "" );
+				$tmplHtml->replace_src_code("所属城区:", "" );
+				$tmplHtml->replace_src_code("__CITYID__", "" );
+				$tmplHtml->replace_array( $tmpArr );//替换下拉列表框
+				$tmplHtml->replace_src_code("返点('%'):", "" );
+				$tmplHtml->replace_src_code( "<input name=\"number_编号_integer_4_4_1_1\" type=\"text\" size=\"5\"  maxlength=4 value=\"__NUMBER__\">", "__NUMBER__");
+				$tmplHtml->replace_src_code( "<input name=\"name_用户名_textboxen_3_20_1_1\" type=\"text\" size=\"12\" value=\"__NAME__\">", "__NAME__");
+				$tmplHtml->replace_src_code( "<input name=\"gainrate_返点_gainrate_1_5_1_1\" type=\"text\" id=\"department\" size=\"12\" value=\"__GAINRATE__\">", "" );
+				$tmplHtml->replace_src_code( "终端数:", "" );
+				$tmplHtml->replace_src_code( "<input name=\"terminalCount_终端上限_integer_1_3_1_1\" type=\"text\" id=\"department\" size=\"12\" value=\"__TERMINALCOUNT__\">", "" ); 
+			}
+
+			if ( $combox_data['influenceid'] == 18 )//若为终端的话
+			{
+				$tmpArr = get_rep_tmp( $agentSubStr, $influenceSubStr, $combox_data['pid'], $combox_data['influenceid'], $combox_data['provinceid'], $combox_data['cityid'] );
+				$tmpArr['__JAVASCRIPT__'] = __DEFAULTJJS__;
+				unset( $tmpArr['__PROVINCEID__'] );
+				unset( $tmpArr['__AGENT__'] );
+				unset( $tmpArr['__CITYID__'] );
+				$tmplHtml->replace_src_code("所属省市:", "" );
+				$tmplHtml->replace_src_code("__PROVINCEID__", "" );
+				$tmplHtml->replace_src_code("所属城区:", "" );
+				$tmplHtml->replace_src_code("__CITYID__", "" );
+				$tmplHtml->replace_src_code( "<input name=\"number_编号_integer_4_4_1_1\" type=\"text\" size=\"5\"  maxlength=4 value=\"__NUMBER__\">", "__NUMBER__");
+				$tmplHtml->replace_src_code( "<input name=\"name_用户名_textboxen_3_20_1_1\" type=\"text\" size=\"12\" value=\"__NAME__\">", "__NAME__");
+				$tmplHtml->replace_src_code("代理商:", "" );
+				$tmplHtml->replace_src_code("__AGENT__", "" );
+				$tmplHtml->replace_src_code("返点('%'):", "" );
+				$tmplHtml->replace_src_code( "<input name=\"gainrate_返点_gainrate_1_5_1_1\" type=\"text\" id=\"department\" size=\"12\" value=\"__GAINRATE__\">", "" );
+				$tmplHtml->replace_src_code( "终端数:", "" );
+				$tmplHtml->replace_src_code( "<input name=\"terminalCount_终端上限_integer_1_3_1_1\" type=\"text\" id=\"department\" size=\"12\" value=\"__TERMINALCOUNT__\">", "" );
+				$tmplHtml->replace_array( $tmpArr );//替换下拉列表框
+			}
+			if ( $combox_data['influenceid'] != 18 && $combox_data['influenceid'] != 31 )
+			{
+				$tmpArr = get_rep_tmp( $agentSubStr, $influenceSubStr, $combox_data['pid'], $combox_data['influenceid'], $combox_data['provinceid'], $combox_data['cityid'] );
+				$tmpArr['__JAVASCRIPT__'] = __DEFAULTJJS__;
+				unset( $tmpArr['__CITYID__'] );
+				unset( $tmpArr['__AGENT__'] );
+				unset( $tmpArr['__PROVINCEID__'] );
+				$tmplHtml->replace_src_code("所属省市:", "" );
+				$tmplHtml->replace_src_code("__PROVINCEID__", "" );
+				$tmplHtml->replace_src_code("所属城区:", "" );
+				$tmplHtml->replace_src_code("__CITYID__", "" );
+
+				$tmplHtml->replace_src_code("代理商:", "" );
+				$tmplHtml->replace_src_code("__AGENT__", "" );
+				$tmplHtml->replace_src_code("返点('%'):", "" );
+				$tmplHtml->replace_src_code( "终端数:", "" );
+				$tmplHtml->replace_src_code( "<input name=\"gainrate_返点_gainrate_1_5_1_1\" type=\"text\" id=\"department\" size=\"12\" value=\"__GAINRATE__\">", "" );
+				$tmplHtml->replace_src_code( "<input name=\"terminalCount_终端上限_integer_1_3_1_1\" type=\"text\" id=\"department\" size=\"12\" value=\"__TERMINALCOUNT__\">", "" );
+				$tmplHtml->replace_array( $tmpArr );//替换下拉列表框
+			}
+			$tmplHtml->replace_src_code("<input type=\"button\" name=\"button_submit1\" value=\"关 闭\" onclick=\"javascript:window.close();\">", "" );
+			$tmplHtml->replace_src_code( "<input name=\"loginame_网点代码_textboxen_4_20_1_1\" type=\"text\" id=\"loginame\" size=\"12\" value=\"__LOGINAME__\">", $node_data['loginame']);
+			$tmplStr = $tmplHtml->get_html_code( $usermanager_url_to_url['form_action'] );
+			//$tmplStr = str_ireplace("所属省市:", "", $tmplStr );
+			//$tmplStr = str_ireplace("__PROVINCEID__", "", $tmplStr );
+			//$tmplStr = str_ireplace("所属城区:", "", $tmplStr );
+			//$tmplStr = str_ireplace("__CITYID__", "", $tmplStr );
+			//echo $tmplStr;
+		}
+		else
+		{
+			switch ( $menuID )
+			{
+				case 84://若为编辑代理商的话
+					//print_r( $combox_data );
+					$influenceSubStr = $influenceSubStr." and id=18";
+					$tmpArr = get_rep_tmp( $agentSubStr, $influenceSubStr, $agentID=0, $influenceID=18, $combox_data['provinceid'], $combox_data['cityid'] );
+					$tmpArr['__JAVASCRIPT__'] = __DEFAULTJJS__;
+					unset( $tmpArr['__AGENT__'] );
+					$tmplHtml = new formcheck( TMPL_PATH_EDIT, $tmpArr );
+					$tmplHtml->replace_array( $tmpArr );//替换下拉列表框
+					$tmplHtml->replace_src_code( "<input name=\"gainrate_返点_gainrate_1_5_1_1\" type=\"text\" id=\"department\" size=\"12\" value=\"__GAINRATE__\">", "" );
+					$tmplStr = $tmplHtml->get_html_code( $usermanager_url_to_url['form_action'] );
+					$tmplStr = str_ireplace("代理商:", "", $tmplStr );
+					$tmplStr = str_ireplace("__AGENT__", "", $tmplStr );
+					$tmplStr = str_ireplace("__AGENTTITLE__", "", $tmplStr );
+					$tmplStr = str_ireplace("__AGENT__", "", $tmplStr );
+					$tmplStr = str_ireplace("返点('%'):", "", $tmplStr );
+					//echo $tmplStr;
+					break;
+				case 85:
+					$influenceSubStr = $influenceSubStr." and id=31";
+					if ( $influenceID === 47 || $influenceID === -1)
+						$agentSubStr = $agentSubStr.' and influenceID=18';
+					if ( $influenceID === 18 )
+						$agentSubStr = $agentSubStr.' and id='.$_SESSION['id'];
+					$tmpArr = get_rep_tmp( $agentSubStr, $influenceSubStr, $combox_data['pid'], $combox_data['influenceid'], $combox_data['provinceid'], $combox_data['cityid'] );
+					$tmpArr['__JAVASCRIPT__'] = __DEFAULTJJS__;
+					unset( $tmpArr['__PROVINCEID__'] );
+					unset( $tmpArr['__CITYID__'] );
+					$tmplHtml = new formcheck( TMPL_PATH_EDIT, $tmpArr );
+					$tmplHtml->replace_array( $tmpArr );//替换下拉列表框
+					$tmplHtml->replace_src_code( "终端数:", "" );
+					$tmplHtml->replace_src_code( "<input name=\"terminalCount_终端上限_integer_1_3_1_1\" type=\"text\" id=\"department\" size=\"12\" value=\"__TERMINALCOUNT__\">", "" );
+					$tmplStr = $tmplHtml->get_html_code( $usermanager_url_to_url['form_action'] );
+					$tmplStr = str_ireplace("所属省市:", "", $tmplStr );
+					$tmplStr = str_ireplace("__PROVINCEID__", "", $tmplStr );
+					$tmplStr = str_ireplace("所属城区:", "", $tmplStr );
+					$tmplStr = str_ireplace("__CITYID__", "", $tmplStr );
+					//echo $tmplStr;
+					break;
+				case 86:
+					$influenceSubStr = $influenceSubStr." and id<>18 and id<>31 and id<>48";
+					if ( $influenceID === 47 || $influenceID === -1)
+						$agentSubStr = $agentSubStr.' and influenceID=18';
+					if ( $influenceID === 18 )
+						$agentSubStr = $agentSubStr.' and id='.$_SESSION['id'];
+					$tmpArr = get_rep_tmp( $agentSubStr, $influenceSubStr, $agentID=0, $combox_data['influenceid'], $combox_data['provinceid'], $combox_data['cityid'] );
+					$tmpArr['__JAVASCRIPT__'] = __DEFAULTJJS__;
+					unset( $tmpArr['__PROVINCEID__'] );
+					unset( $tmpArr['__CITYID__'] );
+					unset( $tmpArr['__AGENT__'] );
+					$tmplHtml = new formcheck( TMPL_PATH_EDIT, $tmpArr );
+
+	//				$tmplHtml->replace_array( $tmpArr );//替换下拉列表框
+					$tmplHtml->replace_src_code( "终端数:", "" );
+					$tmplHtml->replace_src_code( "<input name=\"terminalCount_终端上限_integer_1_3_1_1\" type=\"text\" id=\"department\" size=\"12\" value=\"__TERMINALCOUNT__\">", "" );
+					$tmplHtml->replace_src_code( "返点('%'):", "" );
+					$tmplHtml->replace_src_code( "<input name=\"gainrate_返点_gainrate_1_5_1_1\" type=\"text\" id=\"department\" size=\"12\" value=\"__GAINRATE__\">", "" );
+					$tmplStr = $tmplHtml->get_html_code( $usermanager_url_to_url['form_action'] );
+					$tmplStr = str_ireplace("代理商:", "", $tmplStr );
+					$tmplStr = str_ireplace("__AGENT__", "", $tmplStr );
+					$tmplStr = str_ireplace("所属省市:", "", $tmplStr );
+					$tmplStr = str_ireplace("__PROVINCEID__", "", $tmplStr );
+					$tmplStr = str_ireplace("所属城区:", "", $tmplStr );
+					$tmplStr = str_ireplace("__CITYID__", "", $tmplStr );
+					//echo $tmplStr;
+					break;
+			}
+		}
+
+		//$tmplHtml->replace_array( get_rep_tmp( $node_data['pid'], $combox_data['influenceid'] ) );//替换下拉列表框
+
+		//$tmplStr = $tmplHtml->get_html_code( $usermanager_url_to_url['form_action'], $combox_data );
+		$tmplStr = str_ireplace("__UNION_FIELD__", $list_data_struct['union_field'], $tmplStr );
+		$tmplStr = str_ireplace("__ID__", $id, $tmplStr );
+		$tmplStr = str_ireplace("__LOGINAME__", $node_data['loginame'], $tmplStr );
+		$tmplStr = str_ireplace("__PASSWORD__", $node_data['password'], $tmplStr );
+		$tmplStr = str_ireplace("__PASSWORD1__", $node_data['password'], $tmplStr );
+		//echo "asdfasdasdf=".$node_data['name']."<br>";
+		$tmplStr = str_ireplace("__NAME__", $node_data['name'], $tmplStr );
+		$tmplStr = str_ireplace("__NUMBER__", $node_data['number'], $tmplStr );
+		$tmplStr = str_ireplace("__ADDRESS__", $node_data['address'], $tmplStr );
+		$tmplStr = str_ireplace("__TEL__", $node_data['tel'], $tmplStr );
+		$tmplStr = str_ireplace("__EMAIL__", $node_data['email'], $tmplStr );
+		$tmplStr = str_ireplace("__GAINRATE__", $node_data['gainrate'], $tmplStr );
+		$tmplStr = str_ireplace("__TERMINALCOUNT__", $node_data['terminalcount'], $tmplStr );
+		$tmplStr = str_ireplace("__DEPARTMENT__", $node_data['department'], $tmplStr );
+		$tmplStr = str_ireplace("__PASSWORD__", $tmpstr."<body ", $tmplStr );
+		
+		echo $tmplStr;
+		break;
+	case 'readFlag':
+		$id=intval( $_REQUEST['id'] );
+		$page_list = new pagelist( 1, $menuID, "id=".$id );
+		$node_data = $page_list->get_node_data( $id );
+		//print_r( $node_data );
+		$tmplHtml = new formcheck( TMPL_PATH_DETAIL );
+		$tmplStr = $tmplHtml->get_html_code(  );
+		$tmplStr = str_ireplace("__ID__", $id, $tmplStr );
+		$tmplStr = str_ireplace("__LOGINAME__", $node_data['loginame'], $tmplStr );
+		$tmplStr = str_ireplace("__PASSWORD__", $node_data['password'], $tmplStr );
+		$tmplStr = str_ireplace("__PASSWORD1__", $node_data['password'], $tmplStr );
+		$tmplStr = str_ireplace("__NAME__", $node_data['name'], $tmplStr );
+		$tmplStr = str_ireplace("__NUMBER__", $node_data['number'], $tmplStr );	
+		switch ( $combox_data['influenceid'] )
+	{
+		case -1:
+			$tmplStr = str_replace("<tr><td>终端上限:</td><td>__TERMINALCOUNT__</td></tr>","", $tmplStr );
+			$tmplStr = str_replace("<tr><td>所属代理商:</td><td>__AGENT__</td></tr>","", $tmplStr );
+			$tmplStr = str_replace("<tr><td>余额:</td><td>__BALANCE__</td></tr>","", $tmplStr );
+			$tmplStr = str_replace("<tr><td>返点(%):</td><td>__GAINRATE__</td></tr>","", $tmplStr );
+			break;
+		case 18:
+			$tmplStr = str_replace("<tr><td>所属代理商:</td><td>__AGENT__</td></tr>","", $tmplStr );
+			$tmplStr = str_replace("<tr><td>返点(%):</td><td>__GAINRATE__</td></tr>","", $tmplStr );
+			$tmplStr = str_replace("<tr><td>余额:</td><td>__BALANCE__</td></tr>","", $tmplStr );
+			break;
+		case 31:
+			$tmplStr = str_replace("<tr><td>终端上限:</td><td>__TERMINALCOUNT__</td></tr>","", $tmplStr );
+			break;
+		case 48:
+			$tmplStr = str_replace("<tr><td>终端上限:</td><td>__TERMINALCOUNT__</td></tr>","", $tmplStr );
+			$tmplStr = str_replace("<tr><td>所属代理商:</td><td>__AGENT__</td></tr>","", $tmplStr );
+			$tmplStr = str_replace("<tr><td>余额:</td><td>__BALANCE__</td></tr>","", $tmplStr );
+			$tmplStr = str_replace("<tr><td>返点(%):</td><td>__GAINRATE__</td></tr>","", $tmplStr );
+			break;
+		default:
+			$tmplStr = str_replace("<tr><td>终端上限:</td><td>__TERMINALCOUNT__</td></tr>","", $tmplStr );
+			$tmplStr = str_replace("<tr><td>所属代理商:</td><td>__AGENT__</td></tr>","", $tmplStr );
+			$tmplStr = str_replace("<tr><td>余额:</td><td>__BALANCE__</td></tr>","", $tmplStr );
+			$tmplStr = str_replace("<tr><td>返点(%):</td><td>__GAINRATE__</td></tr>","", $tmplStr );
+			break;
+	}
+		$tmplStr = str_ireplace("__PROVINCE__", $G_db_obj->getFieldValue("select name from typedata where id=".$combox_data['provinceid'] ), $tmplStr );
+		$tmplStr = str_ireplace("__CITY__", $G_db_obj->getFieldValue("select name from typedata where id=".$combox_data['cityid'] ), $tmplStr );
+		$tmplStr = str_ireplace("__ADDR__", $node_data['address'], $tmplStr );
+		$tmplStr = str_ireplace("__TELEPHONE__", $node_data['tel'], $tmplStr );
+		$tmplStr = str_ireplace("__TERMINALCOUNT__", $node_data['terminalcount'], $tmplStr );
+		$tmplStr = str_ireplace("__GAINRATE__", $node_data['gainrate'], $tmplStr );
+		$tmplStr = str_ireplace("__TELEPHONE__", $node_data['telephone'], $tmplStr );
+		$tmplStr = str_ireplace("__AGENT__",$G_db_obj->getFieldValue("select name from systemuser where id=".$combox_data['pid'] ), $tmplStr );
+		$tmplStr = str_ireplace("__INFLUENCE__", $node_data['(select name from influence where influence.id='.TABLE_NAME.'.influenceid)'], $tmplStr );
+		echo $tmplStr;
+		break;
+	case 'balanceFlag':
+		$terminalIDList = $_POST['id_编号_integer_1_10_0_0'];
+		$runLog = "";
+		$allLog = "";
+		$tmpStr=$G_db_obj->getFieldValue( "select (select loginame from systemuser where feelog.optUserID=systemuser.id ) from feelog where status=0 limit 1" );
+		if ( !Empty( $tmpStr ) )
+		{
+			$runMsg1 = "审核员[".$tmpStr."]有尚未审核的订单不能进行结算,请先关闭所有缴费，并审核完所有订单后再结算!";
+			GwriteLogToDB( $runMsg1 );
+			echo get_err_tmpl( $runMsg1 );
+			exit;
+		}
+		$G_db_obj->executesql( "unlock tables" );
+		$G_db_obj->executesql( "lock tables systemuser write,feelog write " );
+			//$G_db_obj->executesql( "lock tables typedata write " );
+		while ( current( $terminalIDList ) !== false )
+		{	
+			$allLog = $allLog.$runLog;
+			$runLog = "";
+			$sqlStr = "select *,(balance+((select (case when sum(money*(case when typeFlag=0 then 1 else (1-gainrate*0.01) end)) is NULL then 0 else sum(money*(case when typeFlag=0  then 1 else (1-gainrate*0.01) end)) end) from feelog where systemuserID=systemuser.id and status=1 )) ) from systemuser where id=".current( $terminalIDList );
+
+			$userInfo = $G_db_obj->executesql( $sqlStr );
+			//if ( current( $terminalIDList ) ==19 || current( $terminalIDList ) == 20 )
+			//{
+				//print_r( $userInfo );
+			//}
+			$G_db_obj->executesql("BEGIN");
+			$balance = round( $userInfo[19], 2 );
+			$tmpSql = "update systemuser set balance = ".$balance." where id=".current( $terminalIDList );
+			if ( $G_db_obj->executesql( $tmpSql ) !== 1 )
+			{
+				$runLog = $runLog."<br>终端[".$userInfo[3]."],结算失败,结帐失败!<br>";
+				next( $terminalIDList );
+				continue;
+			}
+			$runLog = $runLog."<br>终端[".$userInfo[3]."],结算一,结帐成功!";
+			$tmpSql = "insert into feelogdetail(feelogid,money,mobile,note,typeFlag,systemuserID,gainrate,asset,status,optUserID,checkTime,regTime) select * from feelog where systemuserID=".current( $terminalIDList ). " and status <> 0 ";
+			if ( $G_db_obj->executesql( $tmpSql ) !== 1 )
+			{
+				$runLog = $runLog.",结算二,备案失败!<br>";
+				$G_db_obj->executesql("rollback");
+				next( $terminalIDList );
+				continue;
+			}
+			$runLog = $runLog.",结算二,备案成功!";
+			$tmpSql = "delete from feelog where systemuserID=".current( $terminalIDList )." and status<>0";
+			if ( $G_db_obj->executesql( $tmpSql ) !== 1 )
+			{
+				$runLog = $runLog.",结算三,删除失败!<br>";
+				$G_db_obj->executesql("rollback");
+				next( $terminalIDList );
+				continue;
+			}
+			$runLog = $runLog.",结算三,删除成功!";
+			if ( $G_db_obj->executesql( "commit" ) !== 1 )
+			{
+				$runLog = $runLog.",结算四,确认失败!";
+				$G_db_obj->executesql("rollback");
+				$G_db_obj->executesql("insert into optlog(systemuserID,text,ip) values(".$_SESSION['id'].",'".$runLog."','".$_SESSION['ip']."');" );
+				next( $terminalIDList );
+				continue;
+			}
+			$runLog = $runLog.",结算四,确认成功!";
+			 $tmpSql = "select (balance+((select (case when sum(money*(case when typeFlag=0    then 1 else (1-gainrate*0.01) end)) is NULL then 0 else sum(money*(case when typeFlag=0    then 1 else (1-gainrate*0.01) end)) end) from feelog where systemuserID=systemuser.id and status=1 )) ) from systemuser where id=".current( $terminalIDList );
+			 $checkBalance = round( $G_db_obj->getFieldValue( $tmpSql ),2 );
+			 if ( abs( $checkBalance - $balance ) > 0.01 )//结算检查
+			{
+				$runLog = $runLog.",结算五,对帐失败，结算前[".$balance."],结算后[".$checkBalance."]!<br>";
+				$G_db_obj->executesql("rollback");
+				GwriteLogToDB( $runLog );
+				next( $terminalIDList );
+				continue;
+			}
+			$runLog = $runLog.",结算五,对帐成功，结算前[".$balance."],结算后[".$checkBalance."]!<br>";
+			GwriteLogToDB( $runLog );
+			next( $terminalIDList );
+		}
+		if ( Empty( $allLog ) )
+			$allLog = $runLog;
+		echo get_win_alert( "结帐完成!" );
+		$G_db_obj->executesql( "unlock tables" );
+		echo get_err_tmpl( $allLog );
+		break;
+	case 'advanceFlag':
+		$id=intval( $_REQUEST['id'] );
+		$sqlStr = "select *,(select name from typedata where typedata.id=systemuser.provinceID) as provinceName,(select name from typedata where typedata.id=systemuser.cityID) as cityName, round((balance+((select (case when sum(money*(case when typeFlag=0   then 1 else (1-gainrate*0.01) end)) is NULL then 0 else sum(money*(case when typeFlag=0    then 1 else (1-gainrate*0.01) end)) end) from feelog where systemuserID=systemuser.id and status=1 )) ),2 ) from systemuser where id=".$id;
+		$userInfo = $G_db_obj->executesql( $sqlStr );
+		if ( intval( $userInfo[9] ) !== 31 )
+		{
+			$msg = "致命操作,对非终端进行预存话费,操作人姓名[".$_SESSION['name']."]";
+			GwriteLogToDB( $msg );
+			echo get_err_tmpl("只能对终端进行话费预存!");
+			exit;
+		}
+		//print_r( $userInfo );
+		//exit;
+		$agent= $G_db_obj->getFieldValue( "select name from systemuser where id =".$userInfo[13	]  );
+		$tmplHtml = new formcheck( TMPL_PATH_ADVANCE );
+		$tmplStr = $tmplHtml->get_html_code( $usermanager_url_to_url['form_action'] );
+		$tmplStr = str_ireplace("__AGENT__", $agent, $tmplStr );
+		$tmplStr = str_ireplace("__PROVINCEID__", $userInfo[16], $tmplStr );
+		$tmplStr = str_ireplace("__CITYID__", $userInfo[17], $tmplStr );
+		$tmplStr = str_ireplace("__ADDRESS__", $userInfo[6], $tmplStr );
+		$tmplStr = str_ireplace("__GAINRATE__", "0", $tmplStr );
+		$tmplStr = str_ireplace("__TELEPHONE__", $userInfo[5], $tmplStr );
+		$tmplStr = str_ireplace("__SYSTEMUSERID__", $id, $tmplStr );
+		$tmplStr = str_ireplace("__OPTUSERID__", $G_db_obj->getFieldValue("select id from systemuser where influenceid=32 and status=0 and checkStatus=0 order by rand() limit 1"), $tmplStr );
+
+		$tmplStr = str_ireplace("__MOBILE__", "00000000000", $tmplStr );
+		$tmplStr = str_ireplace("__TYPEFLAG__", "0", $tmplStr );//手机类型0为预存，1为手机，2为因话缴费
+		$tmplStr = str_ireplace("__ASSET__", $userInfo[21], $tmplStr );
+		$tmplStr = str_ireplace("__STATUS__", "0", $tmplStr );//1为未审核,2为已审核,3为拒收
+		echo $tmplStr;
+		break;
+
+
+}
+?>

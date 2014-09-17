@@ -1,0 +1,56 @@
+<html>
+<head>
+ <title>系统管理员-用户管理</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="../../cssimg/style.css" type="text/css">
+</head>
+<body>
+<form name="form_1_feelog_1" action ="__FORMACTION__" onsubmit="return script_juge(this);" method="post">
+<div id="mainbox">
+	<div id="userinfobox">
+		<div id="userinfoinbox">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+  <td height="30" class="blueb14">话费预存</td>
+</tr>
+</table>
+<table border=0 cellPadding=5 cellSpacing=1>
+	<tr><td>代理商:</td><td>__AGENT__</P>
+<tr><td>所属省市:</td><td>__PROVINCEID__
+</td></tr>
+<tr><td>所属城区:</td><td> 
+					__CITYID__
+</td></tr>
+<tr><td>地址:</td><td> 
+            __ADDRESS__
+</td></tr>
+<tr><td>联系电话:</td><td> 
+            __TELEPHONE__
+</td></tr>
+<tr><td>预存金额:</td><td> 
+            <input name="money_预存金额_integer_1_4_1_1" type="text" id="number" size="12">
+</td></tr>
+<tr><td>说明:</td><td> 
+            <input name="note_说明_textboxen_1_20_1_1" type="text" id="number" size="20">
+</td></tr>
+            <input name="systemuserID_预存对象_integer_1_10_1_1" type="hidden" id="number" size="12" value="__SYSTEMUSERID__">
+            <input name="optUserID_操作员_integer_1_10_1_1" type="hidden" id="number" size="12" value="__OPTUSERID__">
+            <input name="mobile_手机号_textboxen_1_11_1_1" type="hidden" id="number" size="12" value="__MOBILE__">
+            <input name="typeFlag_费用类型_integer_1_10_1_1" type="hidden" id="number" size="12" value="__TYPEfLAG__">
+            <input name="gainrate_返点_gainrate_1_10_1_1" type="hidden" id="number" size="12" value="__GAINRATE__">
+            <input name="asset_总资产_float_1_10_1_1" type="hidden" id="number" size="12" value="__ASSET__">
+            <input name="status_缴费类型_integer_1_1_1_1" type="hidden" id="number" size="12" value="__STATUS__">
+
+<tr><td cospan=2>
+            <input type="submit" name="button_submit" value="保 存">
+            <input type="button" name="button_submit1" value="关 闭" onclick="javascript:history.back();" >
+</td></tr>
+</table>
+		</div>
+	</div>
+</div>
+
+</form>
+
+</body>
+</html>

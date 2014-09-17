@@ -1,0 +1,32 @@
+<html>
+<head>
+ <title>系统管理员-用户管理</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="__CSSFILEPATH__" type="text/css">
+</head>
+__JAVASCRIPT__
+<body>
+<form name="form_1_systemuser_1" action ="__FORMACTION__" onsubmit="return script_juge(this);" method="post">
+<div id="mainbox">
+	<div id="userinfobox">
+		<div id="userinfoinbox">
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<tr>
+  <td height="30" class="blueb14">填加用户</td>
+</tr>
+</table>		
+		<table>
+<tr><td>用户角色:</td><td>__INFLUENCE__</td></tr>
+<tr><td>用户邮箱:</td><td><input name="loginame_用户邮箱_email_4_30_1_1" type="text" id="loginame" size="20"></td></tr>
+<tr><td>登录密码:</td><td><input name="passwd_登录密码_textboxen_8_16_1_1" type="password" id="password" size="12"></td></tr>
+<tr><td>确认密码:</td><td><input name="passwd_确认密码_textboxen_8_16_0_0" type="password" id="password1" size="12"></td></tr>
+<tr><td>姓名:</td><td><input name="userName_姓名_textboxen_3_20_1_1" type="text" id="name" size="12"></td></tr>
+<tr><td>性别:</td><td>男<input name="sex_性别_integer_1_1_0_1" type="radio"  size="5"  maxlength=4 value="0" checked>女<input name="sex_性别_integer_1_1_0_1" type="radio" size="5"  maxlength=4 value="1"></td></tr>
+<tr><td>城市:</td><td>__CITYID__</td></tr>
+<tr><td colspan=2><input type="submit" name="button_submit" value="保 存" ><input type="button" name="button_submit1" value="关 闭" onclick="javascript:history.back();"></td></tr>
+</table>
+		</div>
+	</div>
+</div></form>
+</body>
+</html>

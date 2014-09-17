@@ -1,0 +1,243 @@
+-- MySQL dump 10.11
+--
+-- Host: localhost    Database: webadmin
+-- ------------------------------------------------------
+-- Server version	5.1.40-log
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES latin1 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `influence`
+--
+
+DROP TABLE IF EXISTS `influence`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `influence` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL DEFAULT '',
+  `keyValueID` tinyint(4) NOT NULL DEFAULT '0',
+  `regTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `nodeLevel` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=87 DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `influence`
+--
+
+LOCK TABLES `influence` WRITE;
+/*!40000 ALTER TABLE `influence` DISABLE KEYS */;
+INSERT INTO `influence` VALUES (48,'è¶çº§ç®¡çå',33,'2008-02-15 09:27:09',0),(51,'æ®éç¨æ·',33,'2008-11-20 08:36:13',0);
+/*!40000 ALTER TABLE `influence` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `keyValue`
+--
+
+DROP TABLE IF EXISTS `keyValue`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `keyValue` (
+  `id` tinyint(4) NOT NULL AUTO_INCREMENT,
+  `keyName` varchar(20) NOT NULL DEFAULT '',
+  `typeFlag` tinyint(4) NOT NULL DEFAULT '0',
+  `value` int(11) NOT NULL DEFAULT '0',
+  `delFlag` tinyint(4) NOT NULL DEFAULT '0',
+  `note` varchar(20) NOT NULL DEFAULT '',
+  `pid` bigint(20) NOT NULL DEFAULT '0',
+  `regtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `keyValue`
+--
+
+LOCK TABLES `keyValue` WRITE;
+/*!40000 ALTER TABLE `keyValue` DISABLE KEYS */;
+INSERT INTO `keyValue` VALUES (6,'ç¦ç¨è§è²',1,1,0,'è§è²ç®¡çç¨',0,'2007-12-27 04:54:35'),(20,'å±±è¥¿ç',4,1,0,'çå¸åç§°',0,'2008-01-02 05:07:22'),(21,'åèå¤',4,2,0,'çå¸åç§°',0,'2008-01-02 05:09:24'),(22,'åäº¬å¸',4,3,0,'çå¸åç§°',0,'2008-01-02 05:09:50'),(23,'æ²³åç',4,4,0,'çå¸åç§°',0,'2008-01-02 05:10:02'),(24,'éè¥¿ç',4,5,0,'çå¸åç§°',0,'2008-01-02 05:10:20'),(25,'è¾½å®ç',4,6,0,'çå¸åç§°',0,'2008-01-02 05:10:34'),(26,'é»é¾æ±',4,7,0,'çå¸åç§°',0,'2008-01-02 05:10:54'),(27,'æ°ç',4,8,0,'çå¸åç§°',0,'2008-01-02 05:11:14'),(28,'åå·',4,9,0,'çå¸åç§°',0,'2008-01-02 05:11:48'),(29,'äºå',4,10,0,'çå¸åç§°',0,'2008-01-02 05:12:11'),(30,'æ²³åç',4,11,0,'çå¸åç§°',0,'2008-01-02 05:12:59'),(33,'æ­£å¸¸è§è²',1,2,0,'ç¨æ·è§è²ç®¡ç',0,'2008-01-03 03:01:26'),(43,'asdasf',2,10,0,'2spersonadminssd',29,'2008-02-18 09:56:28'),(47,'ä¸ååº',5,2232,0,'22323',20,'2008-02-18 09:59:47'),(48,'asdsfssaf',22,22,0,'33232',0,'2008-02-29 00:03:13');
+/*!40000 ALTER TABLE `keyValue` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `optlog`
+--
+
+DROP TABLE IF EXISTS `optlog`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `optlog` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` char(255) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `text` longtext CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `userID` bigint(20) NOT NULL DEFAULT '0',
+  `clubID` int(11) NOT NULL DEFAULT '0',
+  `ip` varchar(20) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL,
+  `regTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=109 DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `optlog`
+--
+
+LOCK TABLES `optlog` WRITE;
+/*!40000 ALTER TABLE `optlog` DISABLE KEYS */;
+INSERT INTO `optlog` VALUES (1,'',',åå¯ç [asdf],ç»å½å¯ç [****],ç¡®è®¤å¯ç [****]',18,0,'127.0.0.1','2010-06-22 03:21:47'),(2,'',',åå¯ç [asdf],ç»å½å¯ç [****],ç¡®è®¤å¯ç [****]',18,0,'127.0.0.1','2010-06-22 03:21:53'),(3,'',',åå¯ç [asdf],ç»å½å¯ç [****],ç¡®è®¤å¯ç [****]',18,0,'127.0.0.1','2010-06-22 03:23:35'),(4,'',',åå¯ç [asdf],ç»å½å¯ç [****],ç¡®è®¤å¯ç [****]',18,0,'127.0.0.1','2010-06-22 03:23:50'),(5,'',',åå¯ç [asdf],ç»å½å¯ç [****],ç¡®è®¤å¯ç [****]',18,0,'127.0.0.1','2010-06-22 03:24:17'),(6,'',',åå¯ç [asdf],ç»å½å¯ç [****],ç¡®è®¤å¯ç [****]',18,0,'127.0.0.1','2010-06-22 03:24:34'),(7,'',',åå¯ç [ASDF],ç»å½å¯ç [****],ç¡®è®¤å¯ç [****]',18,0,'127.0.0.1','2010-06-22 03:25:12'),(8,'',',åå¯ç [ASDF],ç»å½å¯ç [****],ç¡®è®¤å¯ç [****]',18,0,'127.0.0.1','2010-06-22 03:26:02'),(9,'????????????\0',',åå¯ç [ASDF],ç»å½å¯ç [****],ç¡®è®¤å¯ç [****]',18,0,'127.0.0.1','2010-06-22 03:27:08'),(10,'????????????\0',',åå¯ç [asdf],ç»å½å¯ç [****],ç¡®è®¤å¯ç [****]',18,0,'127.0.0.1','2010-06-22 03:27:26'),(11,'?????????????????????????[quanjun@staff.sina.com.cn],??????????????????????','',18,0,'127.0.0.1','2010-06-22 03:48:19'),(12,'?????????????????????????[quanjun@staff.sina.com.cn],??????????????????????','',18,0,'127.0.0.1','2010-06-22 03:48:27'),(13,'?????????????????????????[quanjun@staff.sina.com.cn],??????????????????????','',18,0,'127.0.0.1','2010-06-22 03:48:48'),(14,'?????????????????????????[quanjun@staff.sina.com.cn]','',18,0,'127.0.0.1','2010-06-22 03:49:26'),(15,'?????????????????????????[quanjun@staff.sina.com.cn]','',18,0,'127.0.0.1','2010-06-22 03:49:33'),(16,'updatePassword','å¯ç ä¿®æ¹æå,å¸å·[quanjun@staff.sina.com.cn]',18,0,'127.0.0.1','2010-06-22 03:50:56'),(17,'????????????\0',',è§è²åç§°[SD2SADF],è§è²ç¶æ[33]',18,0,'127.0.0.1','2010-06-22 06:10:25'),(18,'????????????\0',',è§è²åç§°[SD2SADF],è§è²ç¶æ[33]',18,0,'127.0.0.1','2010-06-22 06:22:40'),(19,'????????????\0',',è§è²åç§°[SD2SADF],è§è²ç¶æ[33]',18,0,'127.0.0.1','2010-06-22 06:23:24'),(20,'???????????÷\0',',è§è²åç§°[SD2SADF3],è§è²ç¶æ[33]',18,0,'127.0.0.1','2010-06-22 06:23:28'),(21,'????????????\0',',è§è²åç§°[SD2SADF3],è§è²ç¶æ[33]',18,0,'127.0.0.1','2010-06-22 06:23:30'),(22,'???????????÷\0',',è§è²åç§°[SD2SADF34],è§è²ç¶æ[33]',18,0,'127.0.0.1','2010-06-22 06:23:35'),(23,'????????????\0',',è§è²åç§°[SD2SADF34],è§è²ç¶æ[33]',18,0,'127.0.0.1','2010-06-22 06:23:52'),(24,'???????????÷\0',',è§è²åç§°[SD2SADF34],è§è²ç¶æ[33]',18,0,'127.0.0.1','2010-06-22 06:24:09'),(25,'????????????\0',',è§è²åç§°[SD2SADF34],è§è²ç¶æ[33]',18,0,'127.0.0.1','2010-06-22 06:24:11'),(26,'???????????÷\0',',è§è²åç§°[SD2SADF34],è§è²ç¶æ[33]',18,0,'127.0.0.1','2010-06-22 06:34:46'),(27,'???????????????????????????÷???????<br><br>??????????SD2SADF34<br><br>??????????SD2ASDFA<br><br>','',18,0,'127.0.0.1','2010-06-22 06:46:12'),(28,'???????????????????????????÷???????<br><br>??????????322sdd<br><br>??????????sddssd<br><br>','',18,0,'127.0.0.1','2010-06-22 06:46:19'),(29,'???????????????????????????÷???????<br><br>??????????ASDF<br><br>','',18,0,'127.0.0.1','2010-06-22 06:50:51'),(30,'???????????????????????????÷???????<br><br>??????????asdf2<br><br>??????????32SDSD23<br><br>','',18,0,'127.0.0.1','2010-06-22 06:51:08'),(31,'',',ç¼å·[Array]',18,0,'127.0.0.1','2010-06-22 06:54:31'),(32,'??????????????????\0',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'127.0.0.1','2010-06-22 06:56:36'),(33,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:24:24'),(34,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:25:04'),(35,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:25:17'),(36,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:25:37'),(37,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:26:17'),(38,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:32:18'),(39,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:32:28'),(40,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:32:54'),(41,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:33:31'),(42,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:35:53'),(43,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:46:40'),(44,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:46:56'),(45,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:52:05'),(46,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:52:26'),(47,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 12:52:36'),(48,'','æåéåºç³»ç»!',18,0,'60.247.30.1','2010-12-12 13:12:16'),(49,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 13:17:22'),(50,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 13:17:31'),(51,'updatePassword','å¯ç ä¿®æ¹å¤±è´¥,å¸å·[quanjun@staff.sina.com.cn],åå¯ç è¾å¥éè¯¯',18,0,'60.247.30.1','2010-12-12 13:19:06'),(52,'updatePassword','å¯ç ä¿®æ¹å¤±è´¥,å¸å·[quanjun@staff.sina.com.cn],åå¯ç è¾å¥éè¯¯',18,0,'60.247.30.1','2010-12-12 13:19:20'),(53,'updatePassword','å¯ç ä¿®æ¹å¤±è´¥,å¸å·[quanjun@staff.sina.com.cn],åå¯ç è¾å¥éè¯¯',18,0,'60.247.30.1','2010-12-12 13:19:51'),(54,'updatePassword','å¯ç ä¿®æ¹å¤±è´¥,å¸å·[quanjun@staff.sina.com.cn],åå¯ç è¾å¥éè¯¯',18,0,'60.247.30.1','2010-12-12 13:20:41'),(55,'updatePassword','å¯ç ä¿®æ¹æå,å¸å·[quanjun@staff.sina.com.cn]',18,0,'60.247.30.1','2010-12-12 13:21:25'),(56,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 13:24:58'),(57,'??????????????????\0',',ç¨æ·è§è²[51],ç¨æ·é®ç®±[ewwew@22323.com],ç»å½å¯ç [****],å§å[r23r23r]',18,0,'60.247.30.1','2010-12-12 13:26:27'),(58,'????????????\0',',ç±»ååç§°[æ­£å¸¸è§è²],ç±»åæ è¯[1],ç±»åæ è¯å¼[2],ç±»åè¯´æå16ä½å­ç¬¦[ç¨æ·è§è²ç®¡ç]',18,0,'60.247.30.1','2010-12-12 13:27:44'),(59,'??????????????????\0',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 13:34:19'),(60,'??????????????????\0',',ç¨æ·è§è²[51],å§å[å­å¨å]',18,0,'60.247.30.1','2010-12-12 13:34:35'),(61,'??????????????????\0',',ç¨æ·è§è²[51],å§å[r23r23r]',18,0,'60.247.30.1','2010-12-12 13:35:02'),(62,'??????????????????\0',',ç¨æ·è§è²[48],ç¨æ·é®ç®±å16ä½å­ç¬¦[zhangminsong@ku6],ç»å½å¯ç [****],å§å[zhang]',18,0,'60.247.30.3','2010-12-21 17:42:07'),(63,'','æåéåºç³»ç»!',18,0,'60.247.30.3','2010-12-21 17:42:17'),(64,'','æåéåºç³»ç»!',65,0,'60.247.30.3','2010-12-21 17:42:48'),(65,'','æåéåºç³»ç»!',18,0,'60.247.30.3','2010-12-21 17:46:06'),(66,'','æåéåºç³»ç»!',65,0,'60.247.30.1','2011-01-18 06:38:23'),(67,'','æåéåºç³»ç»!',65,0,'60.247.30.1','2011-01-18 06:40:14'),(68,'','æåéåºç³»ç»!',18,0,'60.247.30.1','2011-01-18 06:42:32'),(69,'','æåéåºç³»ç»!',65,0,'60.247.30.1','2011-01-18 08:03:57'),(70,'','æåéåºç³»ç»!',18,0,'60.247.30.1','2011-01-18 09:36:53'),(71,'','æåéåºç³»ç»!',65,0,'60.247.30.3','2011-01-23 12:19:14'),(72,'','æåéåºç³»ç»!',18,0,'60.247.30.3','2011-01-23 12:20:57'),(73,'','æåéåºç³»ç»!',65,0,'60.247.30.1','2011-01-24 02:17:58'),(74,'','æåéåºç³»ç»!',18,0,'60.247.30.1','2011-01-24 02:41:29'),(75,'','æåéåºç³»ç»!',65,0,'60.247.30.1','2011-01-24 02:41:58'),(76,'','æåéåºç³»ç»!',65,0,'60.247.30.1','2011-01-25 06:45:06'),(77,'','æåéåºç³»ç»!',65,0,'60.247.30.1','2011-01-25 07:42:58'),(78,'','æåéåºç³»ç»!',18,0,'60.247.30.1','2011-01-25 09:30:37'),(79,'','æåéåºç³»ç»!',65,0,'60.247.30.1','2011-01-25 09:31:07'),(80,'','æåéåºç³»ç»!',65,0,'60.247.30.1','2011-01-26 01:50:07'),(81,'','æåéåºç³»ç»!',65,0,'60.247.30.1','2011-02-09 02:01:50'),(82,'','æåéåºç³»ç»!',18,0,'60.247.30.1','2011-02-09 02:04:58'),(83,'','æåéåºç³»ç»!',18,0,'211.151.188.19','2011-02-09 02:16:56'),(84,'',',ç¼å·[30]',18,0,'192.168.2.53','2011-04-27 23:29:52'),(85,'',',ç¼å·[63]',18,0,'192.168.2.53','2011-04-27 23:30:27'),(86,'',',ç¼å·[61]',18,0,'192.168.2.53','2011-04-27 23:30:54'),(87,'',',ç¼å·[29]',18,0,'192.168.2.53','2011-04-27 23:31:19'),(88,'',',ç¼å·[64]',18,0,'192.168.2.53','2011-04-27 23:31:38'),(89,'',',ç¼å·[65]',18,0,'192.168.2.53','2011-04-27 23:37:06'),(90,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[79],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:38:16'),(91,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:39:03'),(92,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:40:14'),(93,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:44:46'),(94,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:45:46'),(95,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:47:22'),(96,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:48:46'),(97,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:48:58'),(98,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:49:09'),(99,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:49:55'),(100,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:51:09'),(101,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:54:26'),(102,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:55:18'),(103,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:56:05'),(104,'ç¼è¾ç³»ç»ç¨æ·',',ç¨æ·è§è²[48],å§å[å­å¨å]',18,0,'192.168.2.53','2011-04-27 23:56:20'),(105,'å é¤æåï¼å é¤åè¡¨å¦ä¸:<br><br>è§è²ä¸º:asdf23sd<br><br>è§è²ä¸º:asdfdasf<br><br>è§è²ä¸º:ads2sd<br><br>è§è²ä¸º:23sdsdsd<br><br>è§è²ä¸º:asdsd<br><br>','',18,0,'192.168.2.53','2011-04-27 23:56:55'),(106,'','æåéåºç³»ç»!',18,0,'192.168.2.53','2011-04-28 00:00:03'),(107,'','æåéåºç³»ç»!',18,0,'192.168.2.53','2011-04-28 02:54:27'),(108,'','??????!',18,0,'127.0.0.1','2011-04-28 08:22:01');
+/*!40000 ALTER TABLE `optlog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `test`
+--
+
+DROP TABLE IF EXISTS `test`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `test` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `test`
+--
+
+LOCK TABLES `test` WRITE;
+/*!40000 ALTER TABLE `test` DISABLE KEYS */;
+INSERT INTO `test` VALUES (1,'????'),(2,'??????'),(3,'????');
+/*!40000 ALTER TABLE `test` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `treemenu`
+--
+
+DROP TABLE IF EXISTS `treemenu`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `treemenu` (
+  `MenuId` int(11) NOT NULL AUTO_INCREMENT,
+  `MenuName` varchar(50) NOT NULL DEFAULT 'test',
+  `MenuPId` int(4) DEFAULT NULL,
+  `MenuLink` varchar(255) NOT NULL DEFAULT '../blank.php?flag=1',
+  `MenuLevel` smallint(6) NOT NULL DEFAULT '0',
+  `MenuEndFlag` enum('0','1') NOT NULL DEFAULT '1',
+  `InfluenceItemList` varchar(1024) NOT NULL DEFAULT '??:style=popUp:addFlag=1|??:style=mulSele:delFlag=1|??:style=singleSele:editFlag=1|??:style=null:readFlag=1|??:style=null:listFlag=1|????:style=null:menuFlag=1|???:style=selfDef:customInfluenceList=1',
+  `SortValue` int(11) NOT NULL DEFAULT '1',
+  `regTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`MenuId`)
+) ENGINE=MyISAM AUTO_INCREMENT=150 DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `treemenu`
+--
+
+LOCK TABLES `treemenu` WRITE;
+/*!40000 ALTER TABLE `treemenu` DISABLE KEYS */;
+INSERT INTO `treemenu` VALUES (1,'æ³¨åç¨æ·',0,'../usermanager/showtmpl.php?flag=1&opt=listFlag',0,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|èªå®ä¹:style=selfDef:customInfluenceList=1',96,'2007-09-03 09:09:44'),(2,'è§è²ç®¡ç',0,'../acl/showtmpl.php?flag=1&opt=listFlag',0,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|èªå®ä¹:style=selfDef:customInfluenceList=1',97,'2007-12-17 09:12:27'),(3,'ç±»åç®¡ç',0,'../typedata/showtmpl.php?flag=1&opt=listFlag',0,'0','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|èªå®ä¹:style=selfDef:customInfluenceList=1',80,'2007-12-17 09:12:50'),(16,'ä¿®æ¹å¯ç ',0,'../updpassword/showtmpl.php?flag=1&opt=editFlag',0,'1','å¡«ï¿½ï¿½ :style=location:addFlag=1|ï¿½ï¿½ é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|èªå®ä¹:style=selfDef:customInfluenceList=1',99,'2007-12-20 10:12:52'),(24,'ç¨æ·ä¿¡æ¯',0,'../mainFrame/blank.php?flag=1&opt=listFlag',0,'1','å¡«ï¿½ï¿½ :style=location:addFlag=1|ï¿½ï¿½ é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|èªå®ä¹:style=selfDef:customInfluenceList=1',95,'2007-12-29 03:12:16'),(26,'åå®¹ç®¡ç',0,'http://adminapi.ktv.ku6.com/adminui/note.html?',0,'0','å¡«ï¿½ï¿½ :style=location:addFlag=1|ï¿½ï¿½ é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|èªå®ä¹:style=selfDef:customInfluenceList=1',4,'2008-01-02 04:01:13'),(28,'è§è²ç¶æ',3,'../keyValue/showtmpl.php?flag=1&opt=listFlag&typeFlag=1',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|èªå®ä¹:style=selfDef:customInfluenceList=1',0,'2007-12-17 09:12:50'),(36,'æä½æ¥å¿',0,'../optlog/showtmpl.php?flag=1&opt=listFlag',0,'1','å¡«ï¿½ï¿½ :style=location:addFlag=1|ï¿½ï¿½ é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|èªå®ä¹:style=selfDef:customInfluenceList=1',82,'2008-01-02 08:01:07'),(38,'æä½è®°å½',0,'../optlog/showtmpl.php?flag=2&opt=listFlag',0,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|èªå®ä¹:style=selfDef:customInfluenceList=1',4,'2008-10-27 02:41:13'),(40,'ç¨æ·ç¼è¾',0,'../usermanager/showtmpl.php?flag=1&opt=editFlag&editFlag=menu',0,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|èªå®ä¹:style=selfDef:customInfluenceList=1',96,'2008-01-16 00:01:23'),(41,'å®å¨éåº',0,'../mainFrame/logout.php?flag=1&opt=logout',0,'1','èåæ¾ç¤º:style=null:menuFlag=1',100,'2008-01-16 12:01:10'),(147,'boxAnyWhereåå¸',144,'http://webadmin.cloudway.cn/project/cloudway.cn/publicCloudServer.php?flag=1&menuID=111',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2011-04-28 00:04:19'),(98,'åçç®¡ç',0,'../frame/blank.php?flag=1&opt=listFlag',0,'0','å¡«å :style=location:addFlag=1|å é¤ é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2008-08-28 00:08:49'),(146,'cloudServeråå¸',144,'http://webadmin.cloudway.cn/project/cloudway.cn/publicCloudServer.php?flag=1&menuID=111',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2011-04-28 00:04:19'),(144,'çæ¬åå¸',0,'http://webadmin.cloudway.cn/project/cloudway.cn/publicCloudServer.php?flag=1&menuID=111',0,'0','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2011-04-28 00:04:19'),(111,'åçå¶ä½',98,'http://webadmin.cloudway.cn/project/cloudway.cn/buildISOConf.php?flag=0&opt=addFlag',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2008-08-28 00:08:49'),(112,'åçåè¡¨',98,'http://webadmin.cloudway.cn/project/cloudway.cn/ISIOList.php&menuID=111',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2008-08-28 00:08:49'),(113,'åçåå¸',98,'http://webadmin.cloudway.cn/project/cloudway.cn/ISIOList.php&menuID=111',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2008-08-28 00:08:49'),(114,'ä»£çåç®¡ç',0,'http://webadmin.cloudway.cn/project/cloudway.cn/agentManager.php?flag=0&menuID=111',0,'0','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2010-12-21 09:12:26'),(115,'æ³¨åä»£çå',114,'http://webadmin.cloudway.cn/project/cloudway.cn/registerAgent.php?flag=1&menuID=111',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2010-12-21 09:12:26'),(116,'ä»£çååè¡¨',114,'http://webadmin.cloudway.cn/project/cloudway.cn/ISIOList.php&menuID=111',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2010-12-21 09:12:26'),(118,'åå®¹åè¡¨',26,'http://adminapi.ktv.ku6.com/adminui/note.html?',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2008-01-02 04:01:13'),(119,'æ·»å åå®¹',26,'http://adminapi.ktv.ku6.com/adminui/note_info_add.html?',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2008-01-02 04:01:13'),(120,'æ·»å å¹¿å',26,'http://adminapi.ktv.ku6.com/adminui/note_adv_add.html?',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2008-01-02 04:01:13'),(121,'ä¼ä¸å®¡æ ¸',0,'http://webadmin.cloudway.cn/project/cloudway.cn/ISIOList.php&menuID=111',0,'0','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2010-12-21 09:12:01'),(122,'å¾å®¡æ ¸ä¼ä¸',121,'http://webadmin.cloudway.cn/project/cloudway.cn/checnEnterprise.php?flag=1&menuID=111',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2010-12-21 09:12:01'),(127,'ä¼ä¸åè¡¨',121,'http://webadmin.cloudway.cn/project/cloudway.cn/enterpriseList.php?flag=1&menuID=111',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2011-01-24 02:22:44'),(145,'liveDeskåå¸',144,'http://webadmin.cloudway.cn/project/cloudway.cn/publicCloudServer.php?flag=1&menuID=111',1,'1','å¡«å :style=location:addFlag=1|å é¤:style=delSele:delFlag=1|ä¿®æ¹:style=singleSele:editFlag=1|åªè¯»:style=null:readFlag=1|åè¡¨:style=null:listFlag=1|èåæ¾ç¤º:style=null:menuFlag=1|æéåé:style=singleSele:editPower=1|èªå®ä¹:style=selfDef:customInfluenceList=1',1,'2011-04-28 00:04:19');
+/*!40000 ALTER TABLE `treemenu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `uid` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `passwd` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `userName` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `sex` enum('0','1') COLLATE utf8_bin NOT NULL DEFAULT '0',
+  `cityID` int(11) NOT NULL DEFAULT '0',
+  `hometown` char(255) COLLATE utf8_bin DEFAULT NULL,
+  `birthday` date DEFAULT '1978-02-13',
+  `address` varchar(60) COLLATE utf8_bin DEFAULT NULL,
+  `qq` varchar(15) COLLATE utf8_bin DEFAULT NULL,
+  `msn` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `mobile` varchar(20) COLLATE utf8_bin DEFAULT NULL,
+  `homepage` varchar(50) COLLATE utf8_bin DEFAULT NULL,
+  `company` varchar(30) COLLATE utf8_bin DEFAULT NULL,
+  `job` char(64) COLLATE utf8_bin DEFAULT '0',
+  `note` text COLLATE utf8_bin,
+  `influenceID` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT '0',
+  `lastLoginTime` datetime DEFAULT '0000-00-00 00:00:00',
+  `regTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (18,'quanjun@staff.sina.com.cn','asdfasdf','å­å¨å','1',25,'asdfasd','1978-02-13','asdfasdfasf','414301929','quanjun@staff.sina.com.cn','13520410732','asdfasdf','asdfasdf','asdfasdf','',48,0,'2011-04-28 16:51:01','2009-01-20 03:09:55');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `userpower`
+--
+
+DROP TABLE IF EXISTS `userpower`;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+CREATE TABLE `userpower` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `treemenuID` int(11) NOT NULL DEFAULT '0',
+  `influenceID` int(11) NOT NULL DEFAULT '0',
+  `readFlag` enum('0','1') NOT NULL DEFAULT '0',
+  `editFlag` enum('0','1') NOT NULL DEFAULT '0',
+  `delFlag` enum('0','1') NOT NULL DEFAULT '0',
+  `addFlag` enum('0','1') NOT NULL DEFAULT '0',
+  `listFlag` enum('0','1') NOT NULL DEFAULT '0',
+  `menuFlag` enum('0','1') NOT NULL DEFAULT '0',
+  `editPower` enum('0','1') NOT NULL DEFAULT '0',
+  `customInfluenceList` varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL DEFAULT '''''',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9604 DEFAULT CHARSET=utf8;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping data for table `userpower`
+--
+
+LOCK TABLES `userpower` WRITE;
+/*!40000 ALTER TABLE `userpower` DISABLE KEYS */;
+INSERT INTO `userpower` VALUES (9211,35,78,'0','0','0','0','0','0','0',''),(9212,98,78,'0','0','0','0','0','0','0',''),(9213,26,78,'0','0','0','0','0','0','0',''),(9214,38,78,'0','0','0','0','0','0','0',''),(9215,61,78,'0','0','0','0','0','0','0',''),(9216,104,78,'0','0','0','0','0','0','0',''),(9217,3,78,'0','0','0','0','0','0','0',''),(9218,27,78,'0','0','0','0','0','0','0',''),(9219,28,78,'0','0','0','0','0','0','0',''),(9220,31,78,'0','0','0','0','0','0','0',''),(9221,45,78,'0','0','0','0','0','0','0',''),(9222,46,78,'0','0','0','0','0','0','0',''),(9223,36,78,'0','0','0','0','0','0','0',''),(9224,57,78,'0','0','0','0','0','0','0',''),(9225,59,78,'0','0','0','0','0','0','0',''),(9226,24,78,'0','0','0','0','0','0','0',''),(9227,1,78,'0','0','0','0','0','0','0',''),(9228,84,78,'0','0','0','0','0','0','0',''),(9229,93,78,'0','0','0','0','0','0','0',''),(9230,40,78,'0','0','0','0','0','0','0',''),(9231,99,78,'0','0','0','0','0','0','0',''),(9232,100,78,'0','0','0','0','0','0','0',''),(9233,101,78,'0','0','0','0','0','0','0',''),(9234,102,78,'0','0','0','0','0','0','0',''),(9235,103,78,'0','0','0','0','0','0','0',''),(9236,2,78,'0','0','0','0','0','0','0',''),(9237,16,78,'0','0','0','0','0','0','0',''),(9238,41,78,'0','0','0','0','0','0','0',''),(9267,35,73,'0','0','0','0','0','0','0',''),(9268,98,73,'0','0','0','0','0','0','0',''),(9269,26,73,'0','0','0','0','0','0','0',''),(9270,38,73,'0','0','0','0','0','0','0',''),(9271,61,73,'0','0','0','0','0','0','0',''),(9272,104,73,'0','0','0','0','0','0','0',''),(9273,3,73,'0','0','0','0','0','0','0',''),(9274,27,73,'0','0','0','0','0','0','0',''),(9275,28,73,'0','0','0','0','0','0','0',''),(9276,31,73,'0','0','0','0','0','0','0',''),(9277,45,73,'0','0','0','0','0','0','0',''),(9278,46,73,'0','0','0','0','0','0','0',''),(9279,36,73,'0','0','0','0','0','0','0',''),(9280,57,73,'0','0','0','0','0','0','0',''),(9281,59,73,'0','0','0','0','0','0','0',''),(9282,24,73,'0','0','0','0','0','0','0',''),(9283,1,73,'0','0','0','0','0','0','0',''),(9284,84,73,'0','0','0','0','0','0','0',''),(9285,93,73,'0','0','0','0','0','0','0',''),(9286,40,73,'0','0','0','0','0','0','0',''),(9287,99,73,'0','0','0','0','0','0','0',''),(9288,100,73,'0','0','0','0','0','0','0',''),(9289,101,73,'0','0','0','0','0','0','0',''),(9290,102,73,'0','0','0','0','0','0','0',''),(9291,103,73,'0','0','0','0','0','0','0',''),(9292,2,73,'0','0','0','0','0','0','0',''),(9293,16,73,'0','0','0','0','0','0','0',''),(9294,41,73,'0','0','0','0','0','0','0',''),(9295,35,51,'0','0','0','0','0','0','0',''),(9296,98,51,'0','0','0','0','0','0','0',''),(9297,26,51,'0','0','0','0','0','0','0',''),(9298,38,51,'0','0','0','0','0','0','0',''),(9299,61,51,'0','0','0','0','0','0','0',''),(9300,104,51,'0','0','0','0','0','0','0',''),(9301,3,51,'0','0','0','0','0','0','0',''),(9302,27,51,'0','0','0','0','0','0','0',''),(9303,28,51,'0','0','0','0','0','0','0',''),(9304,31,51,'0','0','0','0','0','0','0',''),(9305,45,51,'0','0','0','0','0','0','0',''),(9306,46,51,'0','0','0','0','0','0','0',''),(9307,36,51,'0','0','0','0','0','0','0',''),(9308,57,51,'0','0','0','0','0','0','0',''),(9309,59,51,'0','0','0','0','0','0','0',''),(9310,24,51,'0','0','0','0','0','0','0',''),(9311,1,51,'0','0','0','0','0','0','0',''),(9312,84,51,'0','0','0','0','0','0','0',''),(9313,93,51,'0','0','0','0','0','0','0',''),(9314,40,51,'0','0','0','0','0','0','0',''),(9315,99,51,'0','0','0','0','0','0','0',''),(9316,100,51,'0','0','0','0','0','0','0',''),(9317,101,51,'0','0','0','0','0','0','0',''),(9318,102,51,'0','0','0','0','0','0','0',''),(9319,103,51,'0','0','0','0','0','0','0',''),(9320,2,51,'1','1','1','1','1','1','0','ç¼è¾æé:style=null:editPower=1|æçå¬æå:style=location:myDocument=1'),(9321,16,51,'0','1','0','0','0','1','0',''),(9322,41,51,'0','0','0','0','0','1','0',''),(9323,35,82,'0','0','0','0','0','0','0',''),(9324,98,82,'0','0','0','0','0','0','0',''),(9325,26,82,'0','0','0','0','0','0','0',''),(9326,38,82,'0','0','0','0','0','0','0',''),(9327,61,82,'0','0','0','0','0','0','0',''),(9328,104,82,'0','0','0','0','0','0','0',''),(9329,3,82,'0','0','0','0','0','0','0',''),(9330,27,82,'0','0','0','0','0','0','0',''),(9331,28,82,'0','0','0','0','0','0','0',''),(9332,31,82,'0','0','0','0','0','0','0',''),(9333,45,82,'0','0','0','0','0','0','0',''),(9334,46,82,'0','0','0','0','0','0','0',''),(9335,36,82,'0','0','0','0','0','0','0',''),(9336,57,82,'0','0','0','0','0','0','0',''),(9337,59,82,'0','0','0','0','0','0','0',''),(9338,24,82,'0','0','0','0','0','0','0',''),(9339,1,82,'0','0','0','0','0','0','0',''),(9340,84,82,'0','0','0','0','0','0','0',''),(9341,93,82,'0','0','0','0','0','0','0',''),(9342,40,82,'0','0','0','0','0','0','0',''),(9343,99,82,'0','0','0','0','0','0','0',''),(9344,100,82,'1','1','1','1','1','1','0',''),(9345,101,82,'0','0','0','0','0','0','0',''),(9346,102,82,'0','0','0','0','0','0','0',''),(9347,103,82,'0','0','0','0','0','0','0',''),(9348,2,82,'0','0','0','0','0','0','0',''),(9349,16,82,'0','0','0','0','0','0','0',''),(9350,41,82,'0','0','0','0','0','0','0',''),(9603,41,48,'0','0','0','0','0','1','0',''),(9602,16,48,'1','1','1','1','1','1','0',''),(9601,2,48,'1','1','1','1','1','1','0',''),(9600,40,48,'1','1','1','1','1','1','0',''),(9599,1,48,'1','1','1','1','1','1','0',''),(9598,24,48,'1','1','1','1','1','1','0',''),(9597,36,48,'1','1','1','1','1','1','0',''),(9596,28,48,'1','1','1','1','1','1','0',''),(9595,3,48,'0','0','0','0','0','1','0',''),(9594,104,48,'1','1','1','1','1','1','0',''),(9593,61,48,'0','0','0','0','0','1','0',''),(9592,38,48,'1','1','1','1','1','1','0',''),(9591,141,48,'0','0','0','0','0','0','0',''),(9590,120,48,'1','1','1','1','1','1','0',''),(9589,119,48,'1','1','1','1','1','1','0',''),(9588,118,48,'1','1','1','1','1','1','0',''),(9587,26,48,'0','0','0','0','0','1','0',''),(9586,126,48,'1','1','1','1','1','1','0',''),(9585,143,48,'0','0','0','0','0','0','0',''),(9584,125,48,'0','0','0','0','0','1','0',''),(9583,124,48,'1','1','1','1','1','1','0',''),(9582,123,48,'0','0','0','0','0','1','0',''),(9581,138,48,'1','1','1','1','0','1','0',''),(9580,127,48,'1','1','1','1','1','1','0',''),(9579,122,48,'1','1','1','1','1','1','0',''),(9578,121,48,'0','0','0','0','0','1','0',''),(9577,117,48,'1','1','1','1','1','1','0',''),(9576,116,48,'1','1','1','1','1','1','0',''),(9575,115,48,'1','1','1','1','1','1','0',''),(9574,114,48,'0','0','0','0','0','1','0',''),(9573,113,48,'1','1','1','1','1','1','0',''),(9572,112,48,'1','1','1','1','1','1','0',''),(9571,111,48,'1','1','1','1','1','1','0',''),(9570,109,48,'1','1','1','1','1','1','0',''),(9569,108,48,'1','1','1','1','1','1','0',''),(9568,107,48,'1','1','1','1','1','1','0',''),(9567,98,48,'0','0','0','0','0','1','0','');
+/*!40000 ALTER TABLE `userpower` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2011-04-28  8:56:13

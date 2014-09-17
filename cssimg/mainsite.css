@@ -1,0 +1,129 @@
+/* myaacube style */
+#ma-content{ float:left; margin:15px 0; width:100%; }
+#ma-main{ float:left; width:640px; }
+#ma-sidebar{ float:right; width:330px; }
+/*club list*/
+#mam-myclub{ }
+#mam-myclub h2{ position:relative; padding:10px 0 5px 20px; width:620px; background:#E9EEF6 url(../cssimg/bg_mamboxtop.gif) no-repeat left top; color:#485266; font-size:105%; font-weight:bold; }
+#mam-myclub h2 span{ position:absolute; top:10px; right:20px; padding:1px 0 2px 20px; background:url(../cssimg/icon_add.gif) no-repeat 0 50%; color:0066CC; font-size:small; }
+#mam-mcont{ padding:20px; background:#ffffff url(../cssimg/bg_mamboxbot.gif) no-repeat left bottom; }
+#mam-mcont dl{ margin:0; margin-bottom:15px; padding-bottom:15px; height:100px; border-bottom:1px solid #EBF0F5; }
+#mam-mcont dt{ float:right; margin:0; padding:4px 0; width:485px; color:#0066CC; font-size:105%; line-height:1.5em; font-weight:bold; }
+#mam-mcont dd{ margin:5px 0 5px 115px; padding:0; line-height:1.5em; }
+#mam-mcont dd.editpinfo{ text-align:right; } 
+#mam-mcont dl dd.img{ margin:0; }
+#mam-mcont dd.img img{ float:left; margin:0 15px 0 0; }
+#mam-mcont dd.cl-num{ color:#cccccc; }
+#mam-mcont dd.cl-acc{ padding-left:20px; background:url(../cssimg/icon_clacc.gif) no-repeat 0 50%; }
+#mam-mcont dd.cl-act{ padding-left:20px; background:url(../cssimg/icon_clact.gif) no-repeat 0 50%; }
+#mam-mcont .cl_builddate{ color:#cccccc; font-size:small; font-weight:normal; }
+/*tips*/
+#mas-tips{ width:100%; margin-bottom:10px; }
+#mas-tips h2{ width:310px; padding:10px 0 5px 20px; color:#339900; font-size:105%; background:#DFF4CA url(../cssimg/bg_masboxtop.gif) no-repeat left top; }
+#mas-tips ul{ padding:20px; background:#ffffff url(../cssimg/bg_masboxbot.gif) no-repeat left bottom; }
+#mas-tips li{ padding:5px 0 5px 30px; border-bottom:1px solid #EEEEEE; }
+#mas-tips li.ma-mes-ms{ background:url(../cssimg/icon_mes_ms.gif) no-repeat 7px 50%; }
+#mas-tips li.ma-mes-ev{ background:url(../cssimg/icon_mes_ev.gif) no-repeat 7px 50%; }
+#mas-tips li.ma-mes-cl{ background:url(../cssimg/icon_mes_cl.gif) no-repeat 7px 50%; }
+#mas-tips li.ma-sendmes{ border-bottom:none; padding:10px 0 5px 30px; text-align:right; }
+/*events*/ #mas-event{ width:100%; }
+#mas-event h2{ width:310px; padding:10px 0 5px 20px; color:#339900; font-size:105%; background:#DFF4CA url(../cssimg/bg_masboxtop.gif) no-repeat left top; }
+#mas-event ul{ float:left; padding:20px; background:#ffffff url(../cssimg/bg_masboxbot.gif) no-repeat left bottom; }
+#mas-event li{ float:left; margin-bottom:10px; padding-bottom:10px; border-bottom:1px solid #EAEAEA; }
+#mas-event li div{ float:left; padding:1px 10px 0 0; width:40px; height:40px; background:url(../cssimg/bg_dates.gif) no-repeat left top; color:#ffffff; text-align:center; }
+#mas-event li div p.mase-date{ color:#222222; font-size:150%; font-weight:bold; }
+#mas-event li dl{ float:right; width:240px; }
+#mas-event li dt{ padding-top:2px; font-weight:bold; }
+#mas-event li dd{ padding-top:5px; color:#666666; }
+/*actives*/
+#ma-actt{ padding-bottom:5px; font-weight:bold; color:#485266; }
+#ma-actcont ul{ margin:0px; padding:0px; list-style:none; }
+#ma-actcont li{ margin:0; padding:5px 0 5px 20px; background:url(../cssimg/icon_act_addmb.gif) no-repeat 0 50%; }
+/* mymesage style */
+#mm-content{ float:left; margin-top:15px; width:100%; }
+#ms-header{ float:left; padding-left:10px; width:970px; background:url(../cssimg/bg_chline.gif) repeat-x bottom left; }
+#t-msheader{ float:left; display:inline; margin-left:10px; padding:5px 25px; width:80px; background:url(../cssimg/icon_message.gif) no-repeat 0 50%; color:#485266; font-size:110%; font-weight:bold; }
+#ms-nav{ float:left; } 
+#ms-nav ul{ float:left; margin:0; padding:0; list-style:none; }
+#ms-nav li{ float:left; }
+#ms-nav li a{ float:left; margin:4px 5px 0 5px; padding:3px 10px; border:1px solid #6A7A99; border-bottom:none; background:#E8EEF1; }
+#ms-nav li a:hover{ text-decoration:none; background:#f9f9f9; color:#222222; }
+body#recmessage #t-receivem a, body#sendmessage #t-sendm a, body#noticemessage #t-noticem a{ margin:4px 5px 0 5px; padding:3px 10px 4px 10px; color:#222222; background:#ffffff; }
+#pubmessage{ float:left; margin-top:8px; width:100px; }
+.ms-box{ float:left; margin-top:15px;  padding:10px 0; width:100%; border-bottom:1px solid #eee; }
+.ms-state-new { float:left; margin:20px; height:20px; width:20px; background:url(../cssimg/icon_mbgo.gif) no-repeat left; }
+.ms-state-old { float:left; margin:20px; height:20px; width:20px; background:url(../cssimg/icon_mes_ms.gif) no-repeat left; }
+.ms-state-sel { float:left; margin:20px; height:20px; width:20px; }
+.ms-pinfo{ float:left; padding:0 10px; width:60px; line-height:1.5em; }
+.ms-time{ float:left; display:inline; padding:10px 0; width:120px; color:#bbbbbb; line-height:1.5em; }
+.ms-time p{ font-size:90%;}
+.ms-cont{ float:left; display:inline; width:600px; line-height:1.5em; }
+.ms-cont h3{ font-size:100%; font-weight:normal; }
+.ms-cont h3 a{color:#222;}
+.ms-cont p{ padding:2px 0; color:#778899; }
+.ms-cont span{ display:block; color:#090; }
+.ms-cont span a{ margin-right:5px; padding:3px 0 2px 14px; }
+.mse-op{ background:url(../cssimg/icon_op12.gif) no-repeat 0 50%; }
+.mse-re{ background:url(../cssimg/icon_re12.gif) no-repeat 0 50%; }
+.mse-del{ background:url(../cssimg/icon_del12.gif) no-repeat 0 50%; }
+#ms-total{float:left; width:100%; padding:10px 0 20px 0; text-align:right; color:#999; }
+#ms-look{ float:left; padding:20px 80px; }
+#msl-tt{ padding:10px 0 10px 200px; width:600px; border-bottom:1px #ccc solid; background:#f5f5f5;}
+#msl-tt span{ color:#999;}
+#msl-tt h3{ padding:5px 0;}
+.msl-cbox{ float:left; margin-top:15px;}
+.msl-cont{ float:left; display:inline; padding-bottom:50px; width:600px; line-height:1.5em; border-bottom:1px solid #eee;}
+.msl-re{ margin-left:200px;}
+.msl-re p{ padding:3px 0; }
+
+#mmc-notice{ float:left; padding:20px 50px; width:880px; }
+#mmc-notice h2{ float:left; width:100%; padding:5px 0; font-size:small; font-weight:normal; border-bottom:1px solid #ccc; }
+#mmc-notice dl{ float:left; width:850px; padding:10px; margin-bottom:20px; border-bottom:1px dotted #F5F5F5; }
+#mmc-notice dt{ padding:5px 0; font-size:150%; font-weight:bold; }
+#mmc-notice dd{ padding:5px 0; }
+
+/*myprofile style*/ 
+#mp-content{ float:left; margin-top:15px; width:100%; }
+#mp-header{ float:left; padding-left:10px; width:970px; }
+#t-mpheader{ margin:0 0 10px 10px; padding:5px 25px; background:url(../cssimg/icon_profile.gif) no-repeat 0 50%; color:#485266; font-size:110%; font-weight:bold; }
+#mp-pbox{ float:left; margin-left:40px; display:inline; width:890px; border:1px solid #CCCCCC; background:#FCFCFC url(../cssimg/bg_pinfo.gif) repeat-y left; }
+#mp-pface{ float:left; padding:20px 30px 20px 40px; width:120px; }
+#mp-pface a{ display:block; margin-top:10px; }
+#mp-pinfo{ float:left; padding:20px; width:655px; }
+#mp-pinfo h2{ padding:3px 10px; color:#485266; font-size:100%; background:#E3E5EB; }
+#mp-pinfo fieldset{ padding:5px 0 15px 0; }
+#mp-pinfo fieldset label{ float:left; padding-top:3px; width:80px; text-align:right; font-size:12px; }
+#mp-pinfo fieldset div{ padding:3px 0; }
+#mp-pinfo #mp-line{ border-bottom:1px solid #cccccc; }
+.tmail{ color:#485266; font-weight:bold; line-height:1.5em; }
+
+/*input alert*/
+.al-ok{ color:#ffffff; padding-left:16px; background:url(../cssimg/icon_ok.gif) no-repeat 0 50%; }
+.al-wro{ padding-left:18px; background:url(../cssimg/icon_wrong.gif) no-repeat 0 50%; color:#ff6600; }
+.al-inf{ color:#99CC99; font-weight:bold; }
+
+/*creat club*/
+#mc-content{ float:left; margin:30px 0; width:100%; text-align:center; }
+#mc-content h1{ width:678px; margin-left:auto; margin-right:auto; padding:10px 30px; background:url(../cssimg/icon_creatclub.gif) no-repeat 0 50%; font-size:105%; color:#0066CC; text-align:left; }
+#mc-clubinfo{ margin-left:auto; margin-right:auto; padding:30px; width:678px; border:1px solid #CAE2AF; text-align:left; font-size:105%; background:#FCFFF8; }
+#mc-clubinfo fieldset{ padding:5px 0 15px 0; }
+#mc-clubinfo fieldset label{ float:left; padding-top:3px; width:167px; text-align:right; color:#009900; font-size:12px; }
+#mc-clubinfo fieldset div{ padding:5px 0; }
+
+#mc-clubinfo h2 { font-size:110%; color:#009900; line-height:1.5em; padding:10px 40px; background:url(../cssimg/icon_ok2.gif) no-repeat 0 50%;}
+#mc-clubinfo p { padding:10px 40px;}
+#mc-clubinfo p.mcc-small{ font-size:12px; color:#999;}
+
+/*sign up*/
+#su-content{ float:left; margin:10px 0; padding:60px 100px; width:778px; border:1px solid #cccccc;}
+#su-content h2{ font-size:110%; color:#009900; line-height:1.5em; }
+#su-content h2.su-ok{ padding:10px 40px; background:url(../cssimg/icon_ok2.gif) no-repeat 0 50%; }
+#su-content h3{ margin-top:20px; border-bottom:1px solid #cccccc; font-size:105%; line-height:1.5em;}
+#su-content p{ padding:10px 0; line-height:1.5em; font-size:105%; }
+#su-content p.su-okt{ padding:10px 40px; }
+#su-content li{ float:left; padding:20px; width:100px; line-height:1.5em;}
+#su-content li a{ display:block; text-align:center; }
+#suc-btn { padding:20px 0; text-align:center;}
+#suc-sign{ padding:20px; }
+#suc-sign fieldset label{ float:left; padding-top:3px; width:80px; text-align:right; font-size:12px; }
+#suc-sign fieldset div{ padding:10px 0; }

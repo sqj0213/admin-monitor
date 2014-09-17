@@ -1,0 +1,49 @@
+<html>
+<head>
+ <title>系统管理员-用户管理</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link rel="stylesheet" href="../../../cssimg/css/home.css" type="text/css">
+</head>
+<script language=javascript>
+function chk_box2(theBox,i)
+{
+var tmp1 = theBox.name.substr( 0, theBox.name.length - 2 )+'1';
+var tmp2 = theBox.form[tmp1+'[]'];
+if ( theBox.checked==true)
+	tmp2(i).value = '1';
+else
+	tmp2(i).value = '0';
+}
+</script>
+__JAVASCRIPT__
+<body>
+<p>&nbsp;</p>
+<form name="form_1_influence_1" action ="__FORMACTION__" onsubmit="return script_juge(this);" method="post">
+<TABLE cellSpacing=0 cellPadding=0 width="32%" align=center border=0>
+
+    <TR bgColor=#ffffff> 
+      <TD bgColor=#eaf1fb colSpan=3 height=61><BR>
+        <BR> 
+          <P align=center><SPAN class=text3>权限分配</SPAN> 
+				<input type=hidden name="influenceID" value="__INFLUENCEID__">
+          </P>
+          <P align=left><SPAN class=text3><b>角色名称:&nbsp;&nbsp;</b>__INFLUENCENAME__</SPAN> 
+          </P>
+          <P align=left><SPAN class=text3> 
+					__USERPOWER__</SPAN>
+          </P>
+          <P align=center>
+            <input type="submit" name="button_submit" value="保 存" ONMOUSEOVER="this.style.background='#ECFBFF'" 
+                        STYLE="BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-BOTTOM: black 1px solid; BACKGROUND-COLOR: #f9f9f9" 
+                        ONMOUSEOUT="this.style.background='#F9F9F9'">
+            <input type="button" name="button_submit1" value="关 闭" onclick="javascript:history.back();" ONMOUSEOVER="this.style.background='#ECFBFF'" 
+                        STYLE="BORDER-RIGHT: black 1px solid; BORDER-TOP: black 1px solid; BORDER-LEFT: black 1px solid; BORDER-BOTTOM: black 1px solid; BACKGROUND-COLOR: #f9f9f9" 
+                        ONMOUSEOUT="this.style.background='#F9F9F9'">
+          </P>
+        <BR>
+		</TD>
+    </TR>
+</TABLE>
+</form>
+</body>
+</html>
