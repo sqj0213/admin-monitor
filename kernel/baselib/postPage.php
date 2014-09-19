@@ -164,7 +164,7 @@ class postPage
 				//print_r( $_POST );
 				if ( strlen( strval($arr['inputvalue'] ) ) < $arr['property'][3] || strlen( strval($arr['inputvalue']) ) > $arr['property'][4] ) 
 				{
-					//print_r( $arr['property']);
+				    //print_r( $arr['property']);
 					throw new Exception( $arr['property'][1].'('.strval($arr['inputvalue'] ).') 长度必须在 '.$arr['property'][3].'-'.$arr['property'][4].'之间!' );
 				}
 				//echo "--------------------------".$this->checkScriptTypeArray[ $arr['property'][2] ]."=====".$arr['property'][2]."<br>";
@@ -229,7 +229,7 @@ class postPage
 							if ( strcmp( key( $post ), MENU_ID ) !== 0  ) //如果为menuid项的话
 							{
 								//echo "l=".__LINE__."<br>";
-								$this->formPostToDBArray['fieldarray'][$this->formPostToDBArray['columncount']]['property'] = split( '_', key( $post ) );
+								$this->formPostToDBArray['fieldarray'][$this->formPostToDBArray['columncount']]['property'] = preg_split( '/_/', key( $post ) );
 								$this->formPostToDBArray['fieldarray'][$this->formPostToDBArray['columncount']]['inputname'] =  key( $post );
 								$this->formPostToDBArray['fieldarray'][$this->formPostToDBArray['columncount']]['inputvalue'] =  $post[ key( $post ) ];
 								$this->formPostToDBArray['columncount'] = $this->formPostToDBArray['columncount'] + 1;
@@ -256,7 +256,7 @@ class postPage
 								if ( strcmp( key( $post ), MENU_ID ) !== 0  ) //如果为menuid项的话
 								{
 									//echo "l=".__LINE__."<br>";
-									$this->formPostToDBArray['fieldarray'][$this->formPostToDBArray['columncount']]['property'] = split( '_', key( $post ) );
+									$this->formPostToDBArray['fieldarray'][$this->formPostToDBArray['columncount']]['property'] = preg_split( '/_/', key( $post ) );
 									$this->formPostToDBArray['fieldarray'][$this->formPostToDBArray['columncount']]['inputname'] =  key( $post );
 									$this->formPostToDBArray['fieldarray'][$this->formPostToDBArray['columncount']]['inputvalue'] =  $post[ key( $post ) ];
 									$this->formPostToDBArray['columncount'] = $this->formPostToDBArray['columncount'] + 1;
@@ -269,7 +269,7 @@ class postPage
 				{
 					if ( strcmp( key( $post ), MENU_ID ) !== 0  ) //如果为menuid项的话
 					{
-						$this->formPostToDBArray['fieldarray'][$this->formPostToDBArray['columncount']]['property'] = split( '_', key( $post ) );
+						$this->formPostToDBArray['fieldarray'][$this->formPostToDBArray['columncount']]['property'] = preg_split( '/_/', key( $post ) );
 						$this->formPostToDBArray['fieldarray'][$this->formPostToDBArray['columncount']]['inputname'] =  key( $post );
 						$this->formPostToDBArray['fieldarray'][$this->formPostToDBArray['columncount']]['inputvalue'] =  $post[ key( $post ) ];
 						$this->formPostToDBArray['columncount'] = $this->formPostToDBArray['columncount'] + 1;
@@ -282,7 +282,7 @@ class postPage
 		//echo "\n\n\n\n".FORM_NAME."\n\n\n\n";
 		if ( !Empty( $post[ FORM_NAME ]  ) )
 		{
-			$tmp = split( '_', $post[ FORM_NAME ] );
+			$tmp = preg_split( '/_/', $post[ FORM_NAME ] );
 			$this->formPostToDBArray['tablename'] = $tmp[2];//表名
 			//print_r( $post );
 			if ( isset($tmp[3]) )

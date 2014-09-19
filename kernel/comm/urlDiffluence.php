@@ -54,8 +54,7 @@ $tmp = $GLOBAL['modulesArray'][$parseUrl['path']];
 $moduleArr = $$tmp;
 $moduleFrom = $moduleArr[$parseUrl['path']];
 */
-//print_r( $_POST );
-//exit;
+
 $moduleFrom = isset( $GLOBAL['modulesArray'][$parseUrl['path']] )?$GLOBAL['modulesArray'][$parseUrl['path']]:'';
 
 

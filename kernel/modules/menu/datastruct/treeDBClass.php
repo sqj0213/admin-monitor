@@ -416,7 +416,7 @@ class treeDBClass
 			if ( intval( $arr[ 'MenuEndFlag' ] ) === 0 )
 			{
 				$htmlStr = $htmlStr.'<table class=white12 id=Module'.$menuid.'d style=\'display:none\' cellSpacing=0 cellPadding=0 border=0></tbody><tr><td>';
-				$subTree = split( ',', $arr[ 'subTreeList' ] );
+				$subTree = preg_split( '/,/', $arr[ 'subTreeList' ] );
 				for ( $j = 0; $j < count( $subTree ); $j++ )
 					$htmlStr = $htmlStr.$this->buildSubTreeHtml( $subTree[ $j ] );
 			
