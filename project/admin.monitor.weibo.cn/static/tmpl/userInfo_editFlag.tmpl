@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>用户表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="/cssimg/style.css" type="text/css">
+</head>
+
+
+<body>
+<div id="mainbox">
+    <div id="userinfobox">
+        <div id="userinfoinbox">
+            <br/>
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td height="30" class="blueb14">类别修改
+                     </td>
+                </tr>
+            </table>
+            <form name="form_2_monitor.keyValue_1" action="__FORMACTION__" method="post" onsubmit="return script_juge(this);">
+
+                <table align="center" cellpadding="0" cellspacing="0" border="0" width="800" style="font-size: 12px;">
+
+		    <tr>
+                        <td align="right" height="30"><b>用户名：</b></td>
+                        <td align="left"><input type="text" name="username_用户名_textboxen_2_50_1_1" value="__USERNAME__" style="width:150px;height:18px;"></td>
+                    </tr>
+		    <tr>
+                        <td align="right" height="30"><b>姓名：</b></td>
+                        <td align="left"><input type="text" name="name_姓名_textboxen_2_20_1_1" value="__NAME__" style="width:150px;height:18px;"></td>
+                    </tr>
+		    <tr>
+                        <td align="right" height="30"><b>邮箱：</b></td>
+                        <td align="left"><input type="text" name="email_邮箱_textboxen_2_50_1_1" value="__EMAIL__" style="width:150px;height:18px;"></td>
+                    </tr>
+                    <tr>
+                        <td align="right" height="30"><b>手机：</b></td>
+                        <td align="left"><input type="text" name="mobile_手机_integer_3_11_1_1" value="__MOBILE__" style="width:150px;height:18px;"></td>
+                    </tr>
+		    <tr>
+                        <td align="right" height="30"><b>电话：</b></td>
+                        <td align="left"><input type="text" name="phone_电话_textboxen_2_20_1_1" value="__PHONE__" style="width:150px;height:18px;"></td>
+                    </tr>
+		    <tr>
+                        <td align="right" height="30"><b>详细信息：</b></td>
+                        <td align="left"><input type="text" name="info_详细信息_textboxen_2_80_1_1" value="__INFO__" style="width:150px;height:18px;"></td>
+                    </tr>
+		    <tr>
+		    <td align="right" height="30"><b>电话：</b></td>
+                        <td align="left"><input type="text" name="phone_电话_textboxen_2_20_1_1" value="__PHONE__" style="width:150px;height:18px;"></td>
+                    <tr>
+		    <td align="left">
+			<select name="role_用户角色_textboxen_2_50_1_1" value="__ROLE__" style="width:150px;height:18px;">
+				<option value ="yes">故障管理人员</option>
+				<option value ="no">非故障管理人员</option>
+			</select>
+		    </td>
+
+                    </tr>
+
+                    <tr>
+                        <td colspan=2 align="center"><input type="submit" name="button_submit" value="保 存">&nbsp;
+                            <input type="button" name="button_submit1" value="返 回" onclick="window.history.back();">
+                        </td>
+                    </tr>
+                </table>
+        </div>
+    </div>
+</div>
+</form>
+</body>
+</html>

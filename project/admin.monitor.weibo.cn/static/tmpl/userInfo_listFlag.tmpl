@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>用户信息表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href="/cssimg/style.css" type="text/css">
+</head>
+__JAVASCRIPT__
+<body>
+
+<table width="95%" align="center" border="0" cellpadding="0" cellspacing="0" bgcolor="#fAfAfA" id="commtable">
+    <tr bgcolor="#efefef" class="tablett">
+        <td width="20">&nbsp;</td>
+        <td height=30 align="center">用户名</td>
+        <td align="center">姓名</td>
+        <td align="center">邮箱</td>
+	<td align="center">手机</td>
+	<td align="center">电话</td>
+	<td align="center">详细信息</td>
+	<td align="center">用户角色</td>
+    </tr>
+
+<form action="__FORMACTION__" name="form_3_monitor.keyValue" method="post" onsubmit="return script_juge(this);">
+    <!--mapdata-->
+    <tr>
+
+        <td align="center"><input type="checkbox" name="id_编号_integer_1_10_0_1[]" value="__ID__"></td>
+        <td height=30 align="center">__USERNAME__</td>
+        <td align="center">__NAME__</td>
+	<td align="center">__EMAIL__</td>
+	<td align="center">__MOBILE__</td>
+	<td align="center">__PHONE__</td>
+	<td align="center">__INFO__</td>
+	<td align="center">__ROLE__</td>
+    </tr>
+    <!--mapdata-->
+<tr>
+        <td colspan="5" height=30>__BUTTOMSTR__</td>
+    </tr>
+</form>
+
+</table>
+</body>
+</html>
